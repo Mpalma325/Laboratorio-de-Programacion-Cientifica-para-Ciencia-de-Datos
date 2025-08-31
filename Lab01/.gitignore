@@ -1,3 +1,0 @@
-videos/ #Se ignora carpeta videos
-*.txt #Ignora todas las terminaciones .txt
-!text/171.txt #No se ignora 171.txt
