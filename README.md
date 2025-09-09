@@ -1,3 +1,4 @@
-## 🧪 Laboratorio de Programación Científica para Ciencia de Datos
+## 🧪 Laboratorio de Programación Científica para Ciencia de Datos - Laboratorio 3.
 
-Laboratorios y proyecto del curso **MDS7202 - Laboratorio de Programación Científica para Ciencia de Datos**
+En este laboratorio se trabajó con el dataset Online Retail, aplicando distintas técnicas de preprocesamiento y creación de variables, focalizandose en el uso de Pandas y Pipelines. Primero se realizó una exploración inicial de los datos, analizando las distribuciones de precio y cantidad, además del conteo de valores nulos. Luego se aplicó la eliminación de outliers con el método IQR y se implementaron diferentes estrategias de imputación como media como KNN. Posteriormente,  se generaron nuevas variables de estudio, donde finalmente se incorporó un escalamiento de las variables numéricas con MinMax.
+Durante el desarrollo  utilizando ColumnTransformer y FunctionTransformer, se generaron pipelines que permitieran llevar a cabo lo anterior de manera sencilla y reproducible.
