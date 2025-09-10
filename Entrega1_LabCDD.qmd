@@ -1,4 +1,8 @@
 ---
+title: "Outliers"
+format:
+  html:
+    code-fold: true
 jupyter: python3
 ---
 
@@ -305,7 +309,6 @@ print(f"Fecha de fin: {transacciones['purchase_date'].max()}")
 Existen cerca de 1569 clientes únicos en el dataset, mientras que hay 971 tipos de productos distintos.
 
 El dataset posee información del Año 2024, siendo la primera transacción el 01/01/2024 y la última el 31/12/2024.
-
 
 ```{python}
 # Transacciones por día.
