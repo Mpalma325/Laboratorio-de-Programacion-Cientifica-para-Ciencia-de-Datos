@@ -198,7 +198,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 ```
 
-
 ```{python}
 clientes = pd.read_parquet("datasets/clientes.parquet")
 productos = pd.read_parquet("datasets/productos.parquet")
