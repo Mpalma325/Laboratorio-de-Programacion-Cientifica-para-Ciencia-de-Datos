@@ -255,7 +255,7 @@ Finalmente, al observar la descripción de las columnas, la mayoría podrían te
 clientes.drop(["X", "Y"], axis=1, inplace=True)
 ```
 
-Finalmente, para poder hacer una tabla con todos los datos para poder trabajar con Machine learning, hacemos un doble merge usando como base la tabla de transacciones. prueba
+Finalmente, para poder hacer una tabla con todos los datos para poder trabajar con Machine learning, hacemos un doble merge usando como base la tabla de transacciones.
 
 ```{python}
 data = transacciones.merge(clientes, on="customer_id", how="left")
