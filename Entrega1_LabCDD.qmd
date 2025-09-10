@@ -97,7 +97,7 @@ La idea de generar el proyecto por etapas es poder aliviar la carga de trabajo e
 - **Grupos**: Formar equipos de **2 personas**. No se aceptarán trabajos individuales o grupos con más integrantes.
 - **Consultas**: Cualquier duda fuera del horario de clases debe ser planteada en el foro correspondiente. Los mensajes enviados al equipo docente serán respondidos únicamente por este medio. Por favor, revisen las respuestas anteriores en el foro antes de realizar nuevas consultas.
 - **Plagio**: La copia o reutilización no autorizada de trabajos de otros grupos está **estrictamente prohibida**. El incumplimiento de esta norma implicará la anulación inmediata del proyecto y una posible sanción académica.
-- **Material permitido**: Pueden usar cualquier material del curso, ya sea notas, lecturas, códigos, o referencias proporcionadas por los docentes, que consideren útil para el desarrollo del proyecto.
+- **Material permitido**: Pueden usar cualquier material del curso, ya sea notas, lecturas, códigos, o referencias proporcionadas por los docentes, que consideren útil para el desarrollo del proyecto. 
 
 ---
 
@@ -255,7 +255,7 @@ Finalmente, al observar la descripción de las columnas, la mayoría podrían te
 clientes.drop(["X", "Y"], axis=1, inplace=True)
 ```
 
-Finalmente, para poder hacer una tabla con todos los datos para poder trabajar con Machine learning, hacemos un doble merge usando como base la tabla de transacciones.
+Finalmente, para poder hacer una tabla con todos los datos para poder trabajar con Machine learning, hacemos un doble merge usando como base la tabla de transacciones. prueba
 
 ```{python}
 data = transacciones.merge(clientes, on="customer_id", how="left")
