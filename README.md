@@ -1,3 +1,3 @@
-## 🧪 Laboratorio de Programación Científica para Ciencia de Datos
+## 🧪 Laboratorio de Programación Científica para Ciencia de Datos - Laboratorio 4
 
-Laboratorios y proyecto del curso **MDS7202 - Laboratorio de Programación Científica para Ciencia de Datos**
+Se realizó un estudio comparativo de clustering con Plotly, replicando una grilla 2D por dataset y por modelo (K-Means, GMM, Ward y DBSCAN), reportando tiempos y Silhouette para n_samples de 1.000, 5.000 y 10.000. Luego, en el dataset de satisfacción de vuelos, se trabajó con variables numéricas para explorar distribuciones, evaluar escalamiento, revisar correlaciones y reducir a cuatro variables. Con esas bases se construyó un pipeline con PCA para proyectar y visualizar en 2D, se detectaron outliers con IsolationForest (1%) y se entrenó Gaussian Mixture variando clústers, eligiendo el óptimo con AIC/BIC. Finalmente, se mostraron visualizaciones 2D/3D y una síntesis de los clústers resultantes.
