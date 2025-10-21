@@ -8,8 +8,6 @@ venv/
 mlruns/
 .ipynb_checkpoints
 *.ipynb
-.git
-.gitignore
 *.md
-water_potability.csv
+*.csv
 optimize.py

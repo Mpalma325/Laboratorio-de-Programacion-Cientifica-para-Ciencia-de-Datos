@@ -21,7 +21,7 @@ import sys
 # Configuración
 DATA_PATH = os.getenv("DATA_PATH", "water_potability.csv")
 N_TRIALS = int(os.getenv("N_TRIALS", "30"))
-RANDOM_STATE = int(os.getenv("RANDOM_STATE", "42"))
+
 
 # Directorios
 ARTIFACTS_DIR = Path("artifacts")
@@ -71,7 +71,7 @@ def build_model(params):
         objective="binary:logistic",
         eval_metric="auc",
         tree_method="hist",
-        random_state=RANDOM_STATE,
+        random_state=19,
         n_jobs=-1,
         verbosity=0
     )
@@ -133,7 +133,7 @@ def optimize_model():
     
     # Split estratificado
     X_train, X_valid, y_train, y_valid = train_test_split(
-        X, y, test_size=0.2, random_state=RANDOM_STATE, stratify=y
+        X, y, test_size=0.2, random_state=19, stratify=y
     )
     
     # Imputar valores faltantes
@@ -156,7 +156,7 @@ def optimize_model():
     study = optuna.create_study(
         direction="maximize",
         study_name=study_name,
-        sampler=optuna.samplers.TPESampler(seed=RANDOM_STATE),
+        sampler=optuna.samplers.TPESampler(seed=19),
         pruner=optuna.pruners.MedianPruner(
             n_startup_trials=5,
             n_warmup_steps=10,
@@ -179,7 +179,7 @@ def optimize_model():
         with start_run(run_name=run_name):
             log_params(params)
             log_param("trial_number", trial.number)
-            log_param("split_seed", RANDOM_STATE)
+            log_param("split_seed", 19)
             log_param("base_scale_pos_weight", base_scale_pos_weight)
             
             start_time = time.time()
@@ -228,7 +228,7 @@ def optimize_model():
         "n_trials_pruned": len([t for t in study.trials if t.state == optuna.trial.TrialState.PRUNED]),
         "median_imputation_values": medians_dict,
         "base_scale_pos_weight": float(base_scale_pos_weight),
-        "random_state": RANDOM_STATE,
+        "random_state": 19,
         "timestamp": ts
     }
     

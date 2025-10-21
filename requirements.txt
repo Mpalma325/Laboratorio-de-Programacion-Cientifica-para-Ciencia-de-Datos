@@ -4,3 +4,10 @@ pandas
 scikit-learn
 xgboost
 pydantic
+optuna
+numpy
+mlflow
+matplotlib
+seaborn
+plotly
+kaleido
