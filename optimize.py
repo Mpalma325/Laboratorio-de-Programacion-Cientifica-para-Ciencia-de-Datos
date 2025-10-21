@@ -126,28 +126,24 @@ def plot_optuna_visualizations(study, plots_dir):
 
 
 def optimize_model():
-    # Cargar datos
     df = pd.read_csv(DATA_PATH)
     X = df.drop(columns=["Potability"])
     y = df["Potability"].astype(int)
     
-    # Split estratificado
+
     X_train, X_valid, y_train, y_valid = train_test_split(
         X, y, test_size=0.2, random_state=19, stratify=y
     )
     
-    # Imputar valores faltantes
+
     medians = X_train.median(numeric_only=True)
     X_train = X_train.fillna(medians)
     X_valid = X_valid.fillna(medians)
     medians_dict = medians.to_dict()
-    
-    # Calcular scale_pos_weight base
     neg_count = (y_train == 0).sum()
     pos_count = (y_train == 1).sum()
     base_scale_pos_weight = neg_count / pos_count
     
-    # Configurar Optuna y MLflow
     ts = time.strftime("%Y%m%d-%H%M%S")
     study_name = f"Potability-XGB-{ts}"
     exp_name = f"Potability-Optimization-{ts}"
@@ -213,7 +209,6 @@ def optimize_model():
     with open(model_path, "wb") as f:
         pickle.dump(best_model, f)
     
-    # Guardar estudio
     study_path = ARTIFACTS_DIR / "optuna_study.pkl"
     with open(study_path, "wb") as f:
         pickle.dump(study, f)
@@ -237,11 +232,11 @@ def optimize_model():
     
     versions = version_snapshot()
     
-    # Generar gráficos
+
     plot_optuna_visualizations(study, PLOTS_DIR)
     plot_feature_importance(best_model, X.columns.tolist(), PLOTS_DIR / "feature_importance.png")
     
-    # Run resumen
+
     with start_run(run_name=f"SUMMARY_Best_F1={best_f1:.4f}"):
         final_metrics = evaluate_model(best_model, X_valid, y_valid)
         for metric_name, metric_value in final_metrics.items():
