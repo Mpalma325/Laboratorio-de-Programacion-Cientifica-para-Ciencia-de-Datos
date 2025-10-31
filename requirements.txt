@@ -1,13 +1,4 @@
-fastapi
-uvicorn
 pandas
-scikit-learn
-xgboost
-pydantic
-optuna
-numpy
-mlflow
-matplotlib
-seaborn
-plotly
-kaleido
+scikit-learn==1.7.2
+joblib
+gradio
