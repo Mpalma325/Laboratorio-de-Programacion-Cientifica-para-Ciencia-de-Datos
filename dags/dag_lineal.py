@@ -1,10 +1,12 @@
 from datetime import datetime
 from pathlib import Path
+
 from airflow import DAG
 from airflow.operators.empty import EmptyOperator
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
 from hiring_functions import create_folders, split_data, preprocess_and_train
+
 import joblib
 import gradio as gr
 import pandas as pd
@@ -30,9 +32,6 @@ def serve_gradio_json(**kwargs):
         if df.ndim == 1:
             df = df.to_frame().T
         
-        faltantes = [c for c in feature_columns if c not in df.columns]
-        if faltantes:
-            raise ValueError(f"Faltan columnas en el JSON: {faltantes}")
         
         X = df[feature_columns]
         y_hat = pipe.predict(X)
@@ -52,11 +51,12 @@ def serve_gradio_json(**kwargs):
             file_types=[".json"]
         ),
         outputs=gr.Dataframe(),
-        title="Predicción de contratación (JSON)",
-        description="Carga un archivo JSON con las mismas columnas usadas en entrenamiento."
+        title="Predicción de contratación archivo JSON",
+        description="Cargar archivo JSON"
     )
     
-    demo.launch(share=True)
+    demo.launch(server_name="0.0.0.0", server_port=7860, share=False)
+
 
 
 default_args = {
@@ -91,12 +91,13 @@ with DAG(
     do_split = PythonOperator(
         task_id="split_data",
         python_callable=split_data,
+        op_kwargs={"target_col": "HiringDecision"},
     )
 
     train_model = PythonOperator(
         task_id="preprocess_and_train",
         python_callable=preprocess_and_train,
-        op_kwargs={"target_col": "contratado"},
+        op_kwargs={"target_col": "HiringDecision"},
     )
 
     serve_gradio = PythonOperator(

@@ -29,7 +29,13 @@ RUN useradd -ms /bin/bash airflow && \
 
 COPY dags/ ${AIRFLOW_HOME}/dags/
 
-EXPOSE 8080
+EXPOSE 8080 7860
+
+RUN mkdir -p /home/airflow/.cache/huggingface/gradio/frpc && \
+    curl -L -o /home/airflow/.cache/huggingface/gradio/frpc/frpc_linux_amd64_v0.3 \
+        https://cdn-media.huggingface.co/frpc-gradio-0.3/frpc_linux_amd64 && \
+    chmod +x /home/airflow/.cache/huggingface/gradio/frpc/frpc_linux_amd64_v0.3 && \
+    chown -R airflow:airflow /home/airflow/.cache
 
 USER airflow
 
