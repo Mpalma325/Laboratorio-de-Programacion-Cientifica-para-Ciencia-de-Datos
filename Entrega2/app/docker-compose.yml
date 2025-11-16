@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ./backend
+    container_name: sodai-backend
+    environment:
+      - PREDICTIONS_DIR=/mnt/preds
+    volumes:
+      # 👇 Ajusta la ruta si tu carpeta Airflow está en otro lugar
+      - ../airflow/data/predictions:/mnt/preds:ro
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    container_name: sodai-frontend
+    environment:
+      - BACKEND_URL=http://backend:8000
+    ports:
+      - "7860:7860"
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped

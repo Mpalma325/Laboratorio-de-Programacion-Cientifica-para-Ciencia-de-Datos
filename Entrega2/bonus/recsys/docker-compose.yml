@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  recsys-backend:
+    build: ./backend
+    container_name: recsys-backend
+    environment:
+      - DATA_DIR=/mnt/data
+    volumes:
+      - ../../airflow/data/raw:/mnt/data:ro   # <- ajusta si tu raw está en otra carpeta
+    ports:
+      - "8100:8100"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8100/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+
+  recsys-frontend:
+    build: ./frontend
+    container_name: recsys-frontend
+    environment:
+      - BACKEND_URL=http://recsys-backend:8100
+    ports:
+      - "7861:7861"
+    depends_on:
+      recsys-backend:
+        condition: service_healthy
+    restart: unless-stopped

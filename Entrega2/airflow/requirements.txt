@@ -1,0 +1,12 @@
+apache-airflow==2.8.1
+pandas
+numpy
+scikit-learn
+xgboost
+mlflow
+shap
+matplotlib
+evidently
+pyarrow
+joblib
+scipy
