@@ -4,13 +4,13 @@ from airflow.utils.dates import days_ago
 from datetime import timedelta
 
 from scripts.data_preparation import prepare_data
-from scripts.detect_drift import detect_drift  # debe retornar 'retrain_xgb' o 'skip_retrain'
+from scripts.detect_drift import detect_drift 
 from scripts.model_training import train_model
 from scripts.explainability import explain_model
 from scripts.predict_next_week import predict_next_week
 
 def skip_retrain(**kwargs):
-    print("⏩ Sin drift, sin reentrenamiento")
+    print("Sin drift, sin reentrenamiento")
 
 default_args = {
     "owner": "ml_team",
@@ -22,7 +22,7 @@ with DAG(
     dag_id="predictive_pipeline_xgb",
     default_args=default_args,
     start_date=days_ago(1),
-    schedule_interval="@weekly",   # en Airflow >=2.6 puedes usar 'schedule=' si prefieres
+    schedule_interval="@weekly",   
     catchup=False,
     max_active_runs=1,
     tags=["ml", "xgboost", "mlflow", "shap"],

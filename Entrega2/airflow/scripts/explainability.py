@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from pathlib import Path
 from mlflow_setup import get_mlflow_client
 
+
 def explain_model(**kwargs):
     ml = get_mlflow_client()
     model = joblib.load("/opt/airflow/data/models/model_xgb.pkl")
@@ -21,4 +22,3 @@ def explain_model(**kwargs):
     out_png = "/opt/airflow/data/artifacts/shap_summary_xgb.png"
     plt.savefig(out_png, bbox_inches="tight")
     ml.log_artifact(out_png)
-    print("✅ SHAP guardado")

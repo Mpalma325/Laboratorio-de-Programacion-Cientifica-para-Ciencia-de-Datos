@@ -7,7 +7,7 @@ services:
     environment:
       - DATA_DIR=/mnt/data
     volumes:
-      - ../../airflow/data/raw:/mnt/data:ro   # <- ajusta si tu raw está en otra carpeta
+      - ../../airflow/data/raw:/mnt/data:ro   
     ports:
       - "8200:8200"
     healthcheck:

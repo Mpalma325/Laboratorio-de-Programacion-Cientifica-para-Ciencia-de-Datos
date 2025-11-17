@@ -1,14 +1,14 @@
 """
-Paquete de módulos para el pipeline de Airflow.
+Módulos para el pipeline de Airflow.
 
-Este paquete contiene las funciones principales utilizadas en el DAG:
+El archivo contiene las funciones principales utilizadas en el DAG:
  - prepare_data: preparación y limpieza de datos
  - detect_drift: detección de drift en los datos (opcional)
  - train_model: entrenamiento del modelo XGBoost con MLflow
- - explain_model: generación de interpretabilidad (SHAP)
+ - explain_model: generación de interpretabilidad con SHAP
  - predict_next_week: predicción automática para la próxima semana
 
-El archivo __init__.py permite que Python reconozca esta carpeta como
+__init__.py permite que Python reconozca esta carpeta como
 un paquete importable y así Airflow pueda ejecutar correctamente
 los módulos contenidos en scripts/.
 """

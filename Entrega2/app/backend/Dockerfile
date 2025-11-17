@@ -1,6 +1,5 @@
 FROM python:3.11-slim
 
-# Evita bytecode y logs diferidos
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PREDICTIONS_DIR=/opt/airflow/data/predictions \

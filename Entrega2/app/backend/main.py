@@ -10,13 +10,13 @@ DESCRIPTION = (
     "Lee el último archivo .parquet de predicciones y permite consultarlas."
 )
 
-# === Configuración ===
+
 PREDICTIONS_DIR = os.getenv("PREDICTIONS_DIR", "/opt/airflow/data/predictions")
 
 app = FastAPI(title=APP_NAME, description=DESCRIPTION, version="1.0.0")
 
 
-# --------- Modelos de entrada/salida ---------
+
 class PredictRequest(BaseModel):
     customer_id: int | str = Field(..., description="ID del cliente")
     top_k: int = Field(10, ge=1, le=100, description="Cantidad de productos a recomendar")
@@ -44,7 +44,7 @@ class MetaResponse(BaseModel):
     n_rows: int
 
 
-# --------- Funciones auxiliares ---------
+
 def _coerce_str(v) -> str:
     return str(v)
 
@@ -69,7 +69,7 @@ def _read_latest_preds() -> pd.DataFrame:
     return df, path
 
 
-# --------- Endpoints ---------
+
 @app.get("/health")
 def health():
     return {"status": "ok", "service": APP_NAME, "predictions_dir": PREDICTIONS_DIR}

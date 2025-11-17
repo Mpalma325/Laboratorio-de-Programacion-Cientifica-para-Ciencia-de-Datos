@@ -4,7 +4,6 @@ import pandas as pd
 from pathlib import Path
 from datetime import datetime
 
-# Carga robusta de dimensiones (opcionales)
 def _safe_read(path):
     try:
         if os.path.exists(path):
@@ -21,11 +20,8 @@ def predict_next_week(**kwargs):
 
     Path(out_dir).mkdir(parents=True, exist_ok=True)
 
-    # 1) Cargar histórico (t) y nuevos (t+1)
     df_hist = pd.read_parquet(f"{raw_dir}/transacciones.parquet")
     df_new  = _safe_read(f"{new_dir}/transacciones.parquet")
-
-    # 2) (Opcional) merge con dimensiones si existen para mantener esquema consistente
     df_cli = _safe_read(f"{raw_dir}/clientes.parquet")
     df_prod = _safe_read(f"{raw_dir}/productos.parquet")
 
@@ -38,24 +34,18 @@ def predict_next_week(**kwargs):
         if not df_new.empty:
             df_new = df_new.merge(df_prod, on="product_id", how="left")
 
-    # 3) Asegura columna 'compra' en nuevos (no se usa para entrenar, pero ayuda a features)
     if not df_new.empty and "compra" not in df_new.columns:
         df_new["compra"] = 0
 
-    # 4) Concatenar para que el feature pipeline calcule bien shifts/recencia
     df_all = pd.concat([df_hist, df_new], ignore_index=True, sort=False)
 
-    # 5) Semana objetivo: próxima a la más reciente disponible (t+1 si solo hay t; t+2 si ya hay t+1)
     wmax_hist = int(df_hist["week"].max())
     wmax_new  = int(df_new["week"].max()) if ("week" in df_new.columns and len(df_new)) else wmax_hist
     target_week = max(wmax_hist, wmax_new) + 1
-
-    # 6) Cargar pipelines y modelo
     feat_pipe = joblib.load(f"{model_dir}/feature_pipeline.pkl")
     preproc   = joblib.load(f"{model_dir}/preprocessor.pkl")
     model     = joblib.load(f"{model_dir}/model_xgb.pkl")
 
-    # Umbral (si existe)
     thr = 0.5
     thr_path = f"{model_dir}/threshold.txt"
     if os.path.exists(thr_path):
@@ -65,7 +55,7 @@ def predict_next_week(**kwargs):
         except Exception:
             pass
 
-    # 7) Generar features y filtrar solo la semana objetivo
+
     df_feat_all = feat_pipe.transform(df_all)
     if "week" not in df_feat_all.columns:
         raise ValueError("La tabla de features no contiene la columna 'week'.")
@@ -77,19 +67,16 @@ def predict_next_week(**kwargs):
             "Verifica que 'week' avance secuencialmente y que t/t+1 estén cargados correctamente."
         )
 
-    # 8) Transformar y predecir
+
     X_next = preproc.transform(df_target)
     proba  = model.predict_proba(X_next)[:, 1]
     pred   = (proba >= thr).astype("int8")
 
-    # 9) Salida: mantener llaves si están presentes
     keys = [c for c in ["customer_id", "product_id", "week"] if c in df_target.columns]
     out = df_target[keys].copy()
     out["score"] = proba
     out["pred_compra"] = pred
 
-    # 10) Guardar predicciones
     stamp = datetime.now().strftime("%Y%m%d")
     out_path = f"{out_dir}/preds_week_{int(target_week)}_{stamp}.parquet"
     out.to_parquet(out_path)
-    print(f"📦 Predicciones guardadas en {out_path} (thr={thr:.3f}, week={target_week})")

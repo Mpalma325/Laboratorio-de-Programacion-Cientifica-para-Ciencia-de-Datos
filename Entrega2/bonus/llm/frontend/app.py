@@ -13,7 +13,7 @@ def chat_fn(message, history):
         return history + [[message, f"❌ Error: {e}"]]
 
 with gr.Blocks(title="Bonus LLM-lite") as demo:
-    gr.Markdown("# 💬 Chat de preguntas sobre el dataset\nPregunta cosas como:\n- ¿Cuántos clientes únicos hay en el dataset?\n- ¿Cuántas transacciones ha realizado el cliente 123?\n- ¿Cuántos productos únicos se encuentran en los datos?\n")
+    gr.Markdown("# Chat de preguntas sobre el dataset\nPregunta cosas como:\n- ¿Cuántos clientes únicos hay en el dataset?\n- ¿Cuántas transacciones ha realizado el cliente 123?\n- ¿Cuántos productos únicos se encuentran en los datos?\n")
     chat = gr.Chatbot(height=400)
     ipt = gr.Textbox(placeholder="Escribe tu pregunta...")
     btn = gr.Button("Enviar")

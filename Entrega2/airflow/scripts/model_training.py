@@ -48,16 +48,14 @@ def train_model(**kwargs):
     X, y = _load_Xy()
     params = _load_config()
 
-    # scale_pos_weight 'auto' opcional: aquí no es necesario porque ya lo pasaste numérico
+
     default = dict(objective="binary:logistic",
                    eval_metric=params.get("eval_metric", "aucpr"),
                    tree_method=params.get("tree_method", "hist"),
                    random_state=params.get("random_state", 19),
                    n_jobs=params.get("n_jobs", -1))
-    # merge respetando valores del JSON
     all_params = {**default, **params}
 
-    # CV para threshold
     skf = StratifiedKFold(n_splits=3, shuffle=True, random_state=19)
     oof = np.zeros_like(y, dtype=float)
     for tr, vl in skf.split(np.zeros(len(y)), y):
@@ -92,4 +90,4 @@ def train_model(**kwargs):
         ml.sklearn.log_model(final, "xgb_model")
         ml.log_text(str(thr), "chosen_threshold.txt")
 
-    print(f"🏆 Entrenamiento XGB OK. thr={thr:.3f}")
+

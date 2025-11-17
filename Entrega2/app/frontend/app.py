@@ -4,18 +4,17 @@ import requests
 import gradio as gr
 import pandas as pd
 
-# URL del backend (por defecto el servicio 'backend' del docker-compose)
+
 BACKEND_URL = os.getenv("BACKEND_URL", "http://backend:8000")
 
 HELP_TEXT = """
-# 🥤 SodAI Drinks — Interfaz de Recomendación
+#  Recomendador de SodAI Drinks  
+Esta aplicación permite consultar el modelo  desplegado mediante el pipeline de Airflow.
 
-Esta aplicación permite consultar el **modelo de predicción** desplegado mediante el pipeline de Airflow.
-
-### Cómo usar:
-1. **Top-K por cliente:** ingresa un `customer_id`, selecciona `top_k` y (opcionalmente) un `min_score`.
+### Uso:
+1. **Top-K por cliente:** ingresa un `customer_id`, selecciona `top_k` a mostrar y opcionalmente un `min_score`.
 2. **Cliente + Producto:** consulta una predicción específica.
-3. **Estado:** revisa el estado del servicio backend y las últimas predicciones disponibles.
+3. **Estado:** Se revisa el estado del servicio backend y las últimas predicciones disponibles.
 """
 
 def _safe_get_json(url):
@@ -38,13 +37,13 @@ def _safe_post_json(url, payload):
 def check_health():
     data, err = _safe_get_json(f"{BACKEND_URL}/health")
     if err:
-        return f"❌ Error: {err}"
+        return f" Error: {err}"
     return json.dumps(data, indent=2, ensure_ascii=False)
 
 def check_metadata():
     data, err = _safe_get_json(f"{BACKEND_URL}/metadata")
     if err:
-        return f"❌ Error: {err}"
+        return f" Error: {err}"
     return json.dumps(data, indent=2, ensure_ascii=False)
 
 def predict_topk(customer_id, top_k, min_score):
@@ -53,36 +52,36 @@ def predict_topk(customer_id, top_k, min_score):
         payload["min_score"] = float(min_score)
     data, err = _safe_post_json(f"{BACKEND_URL}/predict", payload)
     if err:
-        return f"❌ Error: {err}", None
+        return f" Error: {err}", None
     items = data.get("items", [])
     if not items:
-        return "⚠️ Sin resultados.", None
+        return " Sin resultados", None
     df = pd.DataFrame(items)[["customer_id", "product_id", "week", "score", "pred_compra"]]
-    return f"✅ Semana: {data.get('week')} | Resultados: {data.get('n_returned')}", df
+    return f" Semana: {data.get('week')} | Resultados: {data.get('n_returned')}", df
 
 def predict_pair(customer_id, product_id):
     payload = {"customer_id": customer_id, "product_id": product_id}
     data, err = _safe_post_json(f"{BACKEND_URL}/predict_pair", payload)
     if err:
-        return f"❌ Error: {err}", None
+        return f" Error: {err}", None
     df = pd.DataFrame([data])[["customer_id", "product_id", "week", "score", "pred_compra"]]
-    return "✅ OK", df
+    return  "" , df
 
 with gr.Blocks(title="SodAI Drinks Recomendador") as demo:
     gr.Markdown(HELP_TEXT)
 
     with gr.Tabs():
-        with gr.Tab("🔎 Top-K por cliente"):
+        with gr.Tab("Top-K cliente"):
             with gr.Row():
                 customer_id_topk = gr.Textbox(label="customer_id", placeholder="Ej: 12345")
                 topk = gr.Slider(label="top_k", minimum=1, maximum=50, value=10, step=1)
                 min_score = gr.Number(label="min_score (opcional, 0-1)", value=None, precision=3)
-            btn_topk = gr.Button("Consultar Top-K")
+            btn_topk = gr.Button("Consulta Top-K")
             status_topk = gr.Markdown()
             table_topk = gr.Dataframe(headers=["customer_id","product_id","week","score","pred_compra"], interactive=False)
             btn_topk.click(predict_topk, inputs=[customer_id_topk, topk, min_score], outputs=[status_topk, table_topk])
 
-        with gr.Tab("🎯 Cliente + Producto"):
+        with gr.Tab(" Cliente + Producto"):
             with gr.Row():
                 customer_id_pair = gr.Textbox(label="customer_id", placeholder="Ej: 12345")
                 product_id_pair = gr.Textbox(label="product_id", placeholder="Ej: A-001")
@@ -91,7 +90,7 @@ with gr.Blocks(title="SodAI Drinks Recomendador") as demo:
             table_pair = gr.Dataframe(headers=["customer_id","product_id","week","score","pred_compra"], interactive=False)
             btn_pair.click(predict_pair, inputs=[customer_id_pair, product_id_pair], outputs=[status_pair, table_pair])
 
-        with gr.Tab("🛠 Estado"):
+        with gr.Tab("Estado"):
             btn_health = gr.Button("Ver /health")
             health_out = gr.Code(label="health", language="json")
             btn_meta = gr.Button("Ver /metadata")

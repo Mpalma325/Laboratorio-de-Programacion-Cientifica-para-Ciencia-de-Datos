@@ -3,7 +3,7 @@ from pydantic import BaseModel
 import os, re
 import pandas as pd
 
-DATA_DIR = os.getenv("DATA_DIR", "/mnt/data")  # carpeta con clientes/productos/transacciones.parquet
+DATA_DIR = os.getenv("DATA_DIR", "/mnt/data")  
 app = FastAPI(title="LLM-lite Backend", description="Chatbot de preguntas sobre el dataset (rule-based)", version="1.0.0")
 
 CLIENTES = None
@@ -44,16 +44,15 @@ def health():
 def _answer(msg: str) -> str:
     m = msg.lower()
 
-    # 1) ¿Cuántos clientes únicos hay en el dataset?
+
     if "clientes únicos" in m or ("clientes" in m and "únicos" in m):
         if "customer_id" in TRANSACCIONES.columns:
             n = TRANSACCIONES["customer_id"].nunique()
             return f"Hay {n} clientes únicos en el dataset (basado en transacciones)."
         return "No encuentro la columna customer_id en las transacciones."
 
-    # 2) ¿Cuántas transacciones ha realizado el cliente X?
+
     if "transacciones" in m and "cliente" in m:
-        # Busca un número o token después de 'cliente'
         m_id = re.search(r"cliente\s+([A-Za-z0-9\-\_]+)", m)
         if m_id and "customer_id" in TRANSACCIONES.columns:
             cid = m_id.group(1)
@@ -61,14 +60,11 @@ def _answer(msg: str) -> str:
             return f"El cliente {cid} tiene {cnt} transacciones registradas."
         return "No pude identificar el ID del cliente o falta la columna customer_id."
 
-    # 3) ¿Cuántos productos únicos se encuentran en los datos?
     if "productos únicos" in m or ("productos" in m and "únicos" in m):
         if "product_id" in TRANSACCIONES.columns:
             n = TRANSACCIONES["product_id"].nunique()
             return f"Hay {n} productos únicos en las transacciones."
         return "No encuentro la columna product_id en las transacciones."
-
-    # Extras útiles:
     if "semanas" in m and "únicas" in m and "week" in TRANSACCIONES.columns:
         n = TRANSACCIONES["week"].nunique()
         return f"Hay {n} semanas únicas en las transacciones."

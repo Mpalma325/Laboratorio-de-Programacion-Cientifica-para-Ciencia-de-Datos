@@ -7,7 +7,6 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.impute import SimpleImputer
 
-# Ajusta el import a tu módulo real si corresponde (las clases vienen de tu f.e.)
 from transformers import DatosHistoricos, RecenciaSemanal, PopularidadProductoPrev, CompraRelativa
 
 CONFIG_FILE = "/opt/airflow/data/config/xgb_best_params.json"
@@ -32,21 +31,17 @@ def prepare_data(**kwargs):
     Path(proc_dir).mkdir(parents=True, exist_ok=True)
     Path(model_dir).mkdir(parents=True, exist_ok=True)
 
-    # === Lectura de fuentes
     df_tx = pd.read_parquet(f"{raw_dir}/transacciones.parquet")
-    # opcionales pero recomendados
     path_cli = f"{raw_dir}/clientes.parquet"
     path_prod = f"{raw_dir}/productos.parquet"
     df_cli = pd.read_parquet(path_cli) if os.path.exists(path_cli) else pd.DataFrame()
     df_prod = pd.read_parquet(path_prod) if os.path.exists(path_prod) else pd.DataFrame()
 
-    # === Mergea dimensiones si existen
+
     if not df_cli.empty:
         df_tx = df_tx.merge(df_cli, on="customer_id", how="left", validate="many_to_one")
     if not df_prod.empty:
         df_tx = df_tx.merge(df_prod, on="product_id", how="left", validate="many_to_one")
-
-    # === Feature engineering
     feat_pipe = Pipeline([
         ("hist", DatosHistoricos()),
         ("rec",  RecenciaSemanal(inicio=1000)),
@@ -59,16 +54,14 @@ def prepare_data(**kwargs):
     if "compra" not in df_feat.columns:
         raise ValueError("Se requiere la columna 'compra' en los datos históricos.")
 
-    # Columnas esperadas (después del merge)
+
     numeric_columns = ["num_deliver_per_week", "items_prev", "recencia_producto",
                        "popularity_prev", "frec_producto", "size", "X", "Y"]
     categorical_columns = ["customer_type", "brand", "sub_category", "segment", "package"]
     drop_cols = ["customer_id","product_id","num_visit_per_week","category","n_orders","items","compra","week"]
 
-    # Imputación segura si faltan columnas
     for c in numeric_columns + categorical_columns + drop_cols:
         if c not in df_feat.columns:
-            # crea columna nula para no romper la selección; imputadores se encargan
             df_feat[c] = pd.NA
 
     cfg = _load_config()
@@ -93,11 +86,11 @@ def prepare_data(**kwargs):
     X = preprocessor.fit_transform(df_feat)
     y = df_feat["compra"].astype(int).to_numpy()
 
-    # Persistir pipelines
+
     joblib.dump(preprocessor, f"{model_dir}/preprocessor.pkl")
     joblib.dump(feat_pipe,    f"{model_dir}/feature_pipeline.pkl")
 
-    # Persistir matrices
+
     import numpy as np, scipy.sparse as sp
     if sp.issparse(X):
         sp.save_npz(f"{proc_dir}/X_trainval.npz", X)
@@ -105,9 +98,7 @@ def prepare_data(**kwargs):
         np.save(f"{proc_dir}/X_trainval.npy", X)
     np.save(f"{proc_dir}/y_trainval.npy", y)
 
-    # Snapshot para drift
+
     df_out = pd.DataFrame.sparse.from_spmatrix(X) if sp.issparse(X) else pd.DataFrame(X)
     df_out["y"] = y
     df_out.to_parquet(f"{proc_dir}/features.parquet")
-
-    print("✅ prepare_data: merge clientes/productos + features + preprocessor listos")

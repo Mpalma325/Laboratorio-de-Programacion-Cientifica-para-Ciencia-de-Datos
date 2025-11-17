@@ -7,7 +7,6 @@ services:
     environment:
       - PREDICTIONS_DIR=/mnt/preds
     volumes:
-      # 👇 Ajusta la ruta si tu carpeta Airflow está en otro lugar
       - ../airflow/data/predictions:/mnt/preds:ro
     ports:
       - "8000:8000"
