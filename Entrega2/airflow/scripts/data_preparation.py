@@ -1,17 +1,22 @@
-import os, json
+import os
+import json
+import numpy as np
 import pandas as pd
 import joblib
+import scipy.sparse as sp
 from pathlib import Path
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.impute import SimpleImputer
 
-from transformers import DatosHistoricos, RecenciaSemanal, PopularidadProductoPrev, CompraRelativa
+from scripts.transformers import DatosHistoricos, RecenciaSemanal, PopularidadProductoPrev, CompraRelativa
 
 CONFIG_FILE = "/opt/airflow/data/config/xgb_best_params.json"
 
+
 def _load_config():
+    """Carga configuración desde archivo JSON o variable de entorno."""
     cfg = {}
     if os.path.exists(CONFIG_FILE):
         with open(CONFIG_FILE, "r") as f:
@@ -24,41 +29,101 @@ def _load_config():
             pass
     return cfg
 
+
 def prepare_data(**kwargs):
+    """
+    Prepara los datos para entrenamiento:
+    1. Carga transacciones, clientes y productos
+    2. Crea features semanales y agregaciones
+    3. Aplica feature engineering con transformers personalizados
+    4. Preprocesa columnas numéricas y categóricas
+    5. Guarda datos procesados y pipelines
+    """
+    # Rutas
     raw_dir = "/opt/airflow/data/raw"
     proc_dir = "/opt/airflow/data/processed"
     model_dir = "/opt/airflow/data/models"
     Path(proc_dir).mkdir(parents=True, exist_ok=True)
     Path(model_dir).mkdir(parents=True, exist_ok=True)
 
-    df_tx = pd.read_parquet(f"{raw_dir}/transacciones.parquet")
+    transacciones = pd.read_parquet(f"{raw_dir}/transacciones.parquet")
     path_cli = f"{raw_dir}/clientes.parquet"
     path_prod = f"{raw_dir}/productos.parquet"
-    df_cli = pd.read_parquet(path_cli) if os.path.exists(path_cli) else pd.DataFrame()
-    df_prod = pd.read_parquet(path_prod) if os.path.exists(path_prod) else pd.DataFrame()
+    clientes = pd.read_parquet(path_cli) if os.path.exists(path_cli) else pd.DataFrame()
+    productos = pd.read_parquet(path_prod) if os.path.exists(path_prod) else pd.DataFrame()
+
+    
+    transacciones["week_date"] = transacciones["purchase_date"].dt.to_period("W").apply(
+        lambda r: r.start_time
+    )
+    transacciones = transacciones.sort_values("week_date")
+    transacciones["week"] = pd.factorize(transacciones["week_date"])[0] + 1
+    transacciones["month"] = transacciones["purchase_date"].dt.month
 
 
-    if not df_cli.empty:
-        df_tx = df_tx.merge(df_cli, on="customer_id", how="left", validate="many_to_one")
-    if not df_prod.empty:
-        df_tx = df_tx.merge(df_prod, on="product_id", how="left", validate="many_to_one")
+    weekly = (
+        transacciones.groupby(["customer_id", "product_id", "week"], as_index=False)
+        .agg(
+            items=("items", "sum"),
+            n_orders=("order_id", "nunique"),
+            month=("month", "first")
+        )
+    )
+
+
+    weeks_total = weekly["week"].unique()
+    customers_total = weekly["customer_id"].unique()
+    products_total = weekly["product_id"].unique()
+
+    idx = pd.MultiIndex.from_product(
+        [customers_total, products_total, weeks_total],
+        names=["customer_id", "product_id", "week"]
+    )
+    full = pd.DataFrame(index=idx).reset_index()
+    weekly_full = full.merge(
+        weekly[["customer_id", "product_id", "week", "items", "n_orders"]],
+        on=["customer_id", "product_id", "week"],
+        how="left"
+    )
+
+    if not clientes.empty:
+        weekly_full = weekly_full.merge(clientes, on="customer_id", how="left")
+    if not productos.empty:
+        weekly_full = weekly_full.merge(productos, on="product_id", how="left")
+
+
+    weekly_full["items"] = weekly_full["items"].fillna(0).astype("int32")
+    weekly_full["n_orders"] = weekly_full["n_orders"].fillna(0).astype("int32")
+    weekly_full["compra"] = (weekly_full["items"] > 0).astype("int8")
+
+    
     feat_pipe = Pipeline([
         ("hist", DatosHistoricos()),
-        ("rec",  RecenciaSemanal(inicio=1000)),
-        ("pop",  PopularidadProductoPrev()),
-        ("rel",  CompraRelativa())
+        ("rec", RecenciaSemanal(inicio=1000)),
+        ("pop", PopularidadProductoPrev()),
+        ("rel", CompraRelativa())
     ])
     feat_pipe.set_output(transform="pandas")
-    df_feat = feat_pipe.fit_transform(df_tx)
+    
+    df_feat = feat_pipe.fit_transform(weekly_full)
 
+    # Verificar que existe la columna target
     if "compra" not in df_feat.columns:
         raise ValueError("Se requiere la columna 'compra' en los datos históricos.")
 
+    # Definir columnas
+    numeric_columns = [
+        "num_deliver_per_week", "items_prev", "recencia_producto",
+        "popularity_prev", "frec_producto", "size", "X", "Y"
+    ]
+    categorical_columns = [
+        "customer_type", "brand", "sub_category", "segment", "package"
+    ]
+    drop_cols = [
+        "customer_id", "product_id", "num_visit_per_week", "category",
+        "n_orders", "items", "compra", "week"
+    ]
 
-    numeric_columns = ["num_deliver_per_week", "items_prev", "recencia_producto",
-                       "popularity_prev", "frec_producto", "size", "X", "Y"]
-    categorical_columns = ["customer_type", "brand", "sub_category", "segment", "package"]
-    drop_cols = ["customer_id","product_id","num_visit_per_week","category","n_orders","items","compra","week"]
 
     for c in numeric_columns + categorical_columns + drop_cols:
         if c not in df_feat.columns:
@@ -68,37 +133,41 @@ def prepare_data(**kwargs):
     ohe_min_freq = cfg.get("ohe_min_freq", None)
 
     num_pipe = Pipeline([
-        ("imp",   SimpleImputer(strategy="median")),
+        ("imp", SimpleImputer(strategy="median")),
         ("scale", StandardScaler())
     ])
     cat_pipe = Pipeline([
         ("imp", SimpleImputer(strategy="most_frequent")),
-        ("ohe", OneHotEncoder(handle_unknown="ignore", min_frequency=ohe_min_freq,
-                              dtype=float, sparse_output=True))
+        ("ohe", OneHotEncoder(
+            handle_unknown="ignore",
+            min_frequency=ohe_min_freq,
+            dtype=float,
+            sparse_output=True
+        ))
     ])
 
+    # Transformador completo
     preprocessor = ColumnTransformer([
         ("num", num_pipe, numeric_columns),
         ("cat", cat_pipe, categorical_columns),
         ("drop", "drop", drop_cols),
     ], remainder="drop", verbose_feature_names_out=False)
 
+    # Aplicar transformaciones
     X = preprocessor.fit_transform(df_feat)
     y = df_feat["compra"].astype(int).to_numpy()
 
-
+    
     joblib.dump(preprocessor, f"{model_dir}/preprocessor.pkl")
-    joblib.dump(feat_pipe,    f"{model_dir}/feature_pipeline.pkl")
+    joblib.dump(feat_pipe, f"{model_dir}/feature_pipeline.pkl")
 
-
-    import numpy as np, scipy.sparse as sp
     if sp.issparse(X):
         sp.save_npz(f"{proc_dir}/X_trainval.npz", X)
     else:
         np.save(f"{proc_dir}/X_trainval.npy", X)
     np.save(f"{proc_dir}/y_trainval.npy", y)
 
-
     df_out = pd.DataFrame.sparse.from_spmatrix(X) if sp.issparse(X) else pd.DataFrame(X)
     df_out["y"] = y
     df_out.to_parquet(f"{proc_dir}/features.parquet")
+
