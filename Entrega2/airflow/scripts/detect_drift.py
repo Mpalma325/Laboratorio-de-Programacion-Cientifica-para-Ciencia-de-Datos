@@ -45,11 +45,22 @@ def detect_drift(**kwargs):
     for c in common:
         r = ref[c].to_numpy()
         k = cur[c].to_numpy()
-        r = r[~np.isnan(r)]
-        k = k[~np.isnan(k)]
+        
+        # Solo aplicar isnan si es columna numérica
+        if np.issubdtype(r.dtype, np.number):
+            r = r[~np.isnan(r)]
+            k = k[~np.isnan(k)]
+        else:
+            # Para categóricas, remover None/NaN usando pandas
+            r = r[pd.notna(r)]
+            k = k[pd.notna(k)]
+        
         if len(r) > 0 and len(k) > 0:
-            _, p = ks_2samp(r, k)
-            drift[c] = float(p)
+            try:
+                _, p = ks_2samp(r, k)
+                drift[c] = float(p)
+            except Exception:
+                pass
 
     drift_detected = any(p < 0.05 for p in drift.values()) if drift else False
 

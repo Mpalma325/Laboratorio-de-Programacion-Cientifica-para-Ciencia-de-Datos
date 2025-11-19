@@ -24,10 +24,10 @@ def explain_model(**kwargs):
     
     indices = np.random.RandomState(42).choice(X.shape[0], n_samples, replace=False)
     Xs = X_dense[indices]
-
-    explainer = shap.TreeExplainer(model)
+    
+    explainer = shap.TreeExplainer(model, feature_perturbation="interventional")
     shap_values = explainer.shap_values(Xs)
-
+    
     Path("/opt/airflow/data/artifacts").mkdir(parents=True, exist_ok=True)
     plt.figure()
     shap.summary_plot(shap_values, Xs, show=False)
