@@ -49,9 +49,11 @@ with DAG(
     )
 
     t5_predict = PythonOperator(
-        task_id="predict_next_week",
-        python_callable=predict_next_week,
+    task_id="predict_next_week",
+    python_callable=predict_next_week,
+    trigger_rule="none_failed_min_one_success",
     )
+
 
     t_skip = PythonOperator(
         task_id="skip_retrain",

@@ -1,4 +1,6 @@
-import os, json
+import os
+import json
+import shutil
 import numpy as np
 import joblib
 import mlflow
@@ -10,6 +12,7 @@ from mlflow_setup import get_mlflow_client
 import scipy.sparse as sp
 
 CONFIG_FILE = "/opt/airflow/data/config/xgb_best_params.json"
+
 
 def _load_config():
     cfg = {}
@@ -24,6 +27,7 @@ def _load_config():
             pass
     return cfg
 
+
 def _load_Xy():
     proc_dir = "/opt/airflow/data/processed"
     X_npz = f"{proc_dir}/X_trainval.npz"
@@ -35,11 +39,13 @@ def _load_Xy():
         X = np.load(X_npy, allow_pickle=True)
     return X, y
 
+
 def _best_threshold(y_true, proba):
     grid = np.linspace(0.2, 0.8, 13)
     f1s = [f1_score(y_true, (proba >= t).astype(int)) for t in grid]
     i = int(np.argmax(f1s))
     return float(grid[i]), float(f1s[i])
+
 
 def train_model(**kwargs):
     ml = get_mlflow_client()
@@ -48,12 +54,13 @@ def train_model(**kwargs):
     X, y = _load_Xy()
     params = _load_config()
 
-
-    default = dict(objective="binary:logistic",
-                   eval_metric=params.get("eval_metric", "aucpr"),
-                   tree_method=params.get("tree_method", "hist"),
-                   random_state=params.get("random_state", 19),
-                   n_jobs=params.get("n_jobs", -1))
+    default = dict(
+        objective="binary:logistic",
+        eval_metric=params.get("eval_metric", "aucpr"),
+        tree_method=params.get("tree_method", "hist"),
+        random_state=params.get("random_state", 19),
+        n_jobs=params.get("n_jobs", -1)
+    )
     all_params = {**default, **params}
 
     skf = StratifiedKFold(n_splits=3, shuffle=True, random_state=19)
@@ -74,7 +81,7 @@ def train_model(**kwargs):
 
         metrics = {
             "roc_auc": float(roc_auc_score(y, proba)),
-            "pr_auc":  float(average_precision_score(y, proba)),
+            "pr_auc": float(average_precision_score(y, proba)),
             "f1_at_thr": float(f1_score(y, y_pred)),
             "chosen_thr": thr
         }
@@ -90,4 +97,12 @@ def train_model(**kwargs):
         ml.sklearn.log_model(final, "xgb_model")
         ml.log_text(str(thr), "chosen_threshold.txt")
 
-
+        ref_dir = Path("/opt/airflow/data/reference")
+        ref_dir.mkdir(parents=True, exist_ok=True)
+        
+        proc_features = "/opt/airflow/data/processed/features.parquet"
+        ref_features = "/opt/airflow/data/reference/features.parquet"
+        
+        if os.path.exists(proc_features):
+            shutil.copy(proc_features, ref_features)
+            ml.log_artifact(ref_features)

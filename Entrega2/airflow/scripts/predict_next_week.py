@@ -1,8 +1,10 @@
 import os
 import joblib
+import numpy as np
 import pandas as pd
 from pathlib import Path
 from datetime import datetime
+
 
 def _safe_read(path):
     try:
@@ -12,71 +14,88 @@ def _safe_read(path):
         pass
     return pd.DataFrame()
 
+
 def predict_next_week(**kwargs):
     raw_dir = "/opt/airflow/data/raw"
     new_dir = "/opt/airflow/data/new_data"
-    out_dir = "/opt/airflow/data/predictions"
+    proc_dir = "/opt/airflow/data/processed"
     model_dir = "/opt/airflow/data/models"
-
+    out_dir = "/opt/airflow/data/predictions"
+    
     Path(out_dir).mkdir(parents=True, exist_ok=True)
-
-    df_hist = pd.read_parquet(f"{raw_dir}/transacciones.parquet")
-    df_new  = _safe_read(f"{new_dir}/transacciones.parquet")
-    df_cli = _safe_read(f"{raw_dir}/clientes.parquet")
-    df_prod = _safe_read(f"{raw_dir}/productos.parquet")
-
-    if not df_cli.empty:
-        df_hist = df_hist.merge(df_cli, on="customer_id", how="left")
-        if not df_new.empty:
-            df_new = df_new.merge(df_cli, on="customer_id", how="left")
-    if not df_prod.empty:
-        df_hist = df_hist.merge(df_prod, on="product_id", how="left")
-        if not df_new.empty:
-            df_new = df_new.merge(df_prod, on="product_id", how="left")
-
-    if not df_new.empty and "compra" not in df_new.columns:
-        df_new["compra"] = 0
-
-    df_all = pd.concat([df_hist, df_new], ignore_index=True, sort=False)
-
-    wmax_hist = int(df_hist["week"].max())
-    wmax_new  = int(df_new["week"].max()) if ("week" in df_new.columns and len(df_new)) else wmax_hist
-    target_week = max(wmax_hist, wmax_new) + 1
-    feat_pipe = joblib.load(f"{model_dir}/feature_pipeline.pkl")
-    preproc   = joblib.load(f"{model_dir}/preprocessor.pkl")
-    model     = joblib.load(f"{model_dir}/model_xgb.pkl")
-
+    
+    new_trans_path = f"{new_dir}/transacciones.parquet"
+    
+    if os.path.exists(new_trans_path):
+        trans_old = pd.read_parquet(f"{raw_dir}/transacciones.parquet")
+        trans_new = pd.read_parquet(new_trans_path)
+        
+        df_cli = _safe_read(f"{raw_dir}/clientes.parquet")
+        df_prod = _safe_read(f"{raw_dir}/productos.parquet")
+        
+        trans_all = pd.concat([trans_old, trans_new], ignore_index=True)
+        
+        trans_all["week_date"] = trans_all["purchase_date"].dt.to_period("W").apply(
+            lambda r: r.start_time
+        )
+        trans_all = trans_all.sort_values("week_date")
+        trans_all["week"] = pd.factorize(trans_all["week_date"])[0] + 1
+        
+        weekly = (
+            trans_all.groupby(["customer_id", "product_id", "week"], as_index=False)
+            .agg(items=("items", "sum"), n_orders=("order_id", "nunique"))
+        )
+        
+        weeks_total = weekly["week"].unique()
+        customers_total = weekly["customer_id"].unique()
+        products_total = weekly["product_id"].unique()
+        
+        idx = pd.MultiIndex.from_product(
+            [customers_total, products_total, weeks_total],
+            names=["customer_id", "product_id", "week"]
+        )
+        full = pd.DataFrame(index=idx).reset_index()
+        weekly_full = full.merge(
+            weekly, on=["customer_id", "product_id", "week"], how="left"
+        )
+        
+        if not df_cli.empty:
+            weekly_full = weekly_full.merge(df_cli, on="customer_id", how="left")
+        if not df_prod.empty:
+            weekly_full = weekly_full.merge(df_prod, on="product_id", how="left")
+        
+        weekly_full["items"] = weekly_full["items"].fillna(0).astype("int32")
+        weekly_full["n_orders"] = weekly_full["n_orders"].fillna(0).astype("int32")
+        weekly_full["compra"] = (weekly_full["items"] > 0).astype("int8")
+        
+        feat_pipe = joblib.load(f"{model_dir}/feature_pipeline.pkl")
+        df_feat_all = feat_pipe.transform(weekly_full)
+        
+        target_week = df_feat_all["week"].max()
+        
+    else:
+        df_feat_all = pd.read_parquet(f"{proc_dir}/features.parquet")
+        target_week = df_feat_all["week"].max()
+    
+    df_target = df_feat_all[df_feat_all["week"] == target_week].copy()
+    
+    preproc = joblib.load(f"{model_dir}/preprocessor.pkl")
+    model = joblib.load(f"{model_dir}/model_xgb.pkl")
+    
     thr = 0.5
     thr_path = f"{model_dir}/threshold.txt"
     if os.path.exists(thr_path):
-        try:
-            with open(thr_path, "r") as f:
-                thr = float(f.read().strip())
-        except Exception:
-            pass
-
-
-    df_feat_all = feat_pipe.transform(df_all)
-    if "week" not in df_feat_all.columns:
-        raise ValueError("La tabla de features no contiene la columna 'week'.")
-
-    df_target = df_feat_all[df_feat_all["week"] == target_week].copy()
-    if df_target.empty:
-        raise ValueError(
-            f"No hay filas para la semana objetivo {target_week}. "
-            "Verifica que 'week' avance secuencialmente y que t/t+1 estén cargados correctamente."
-        )
-
-
+        with open(thr_path, "r") as f:
+            thr = float(f.read().strip())
+    
     X_next = preproc.transform(df_target)
-    proba  = model.predict_proba(X_next)[:, 1]
-    pred   = (proba >= thr).astype("int8")
-
-    keys = [c for c in ["customer_id", "product_id", "week"] if c in df_target.columns]
-    out = df_target[keys].copy()
+    proba = model.predict_proba(X_next)[:, 1]
+    pred = (proba >= thr).astype("int8")
+    
+    out = df_target[["customer_id", "product_id", "week"]].copy()
     out["score"] = proba
     out["pred_compra"] = pred
-
+    
     stamp = datetime.now().strftime("%Y%m%d")
     out_path = f"{out_dir}/preds_week_{int(target_week)}_{stamp}.parquet"
     out.to_parquet(out_path)

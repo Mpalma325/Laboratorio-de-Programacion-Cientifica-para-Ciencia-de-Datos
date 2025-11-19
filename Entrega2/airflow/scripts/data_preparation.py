@@ -16,7 +16,6 @@ CONFIG_FILE = "/opt/airflow/data/config/xgb_best_params.json"
 
 
 def _load_config():
-    """Carga configuración desde archivo JSON o variable de entorno."""
     cfg = {}
     if os.path.exists(CONFIG_FILE):
         with open(CONFIG_FILE, "r") as f:
@@ -31,15 +30,6 @@ def _load_config():
 
 
 def prepare_data(**kwargs):
-    """
-    Prepara los datos para entrenamiento:
-    1. Carga transacciones, clientes y productos
-    2. Crea features semanales y agregaciones
-    3. Aplica feature engineering con transformers personalizados
-    4. Preprocesa columnas numéricas y categóricas
-    5. Guarda datos procesados y pipelines
-    """
-    # Rutas
     raw_dir = "/opt/airflow/data/raw"
     proc_dir = "/opt/airflow/data/processed"
     model_dir = "/opt/airflow/data/models"
@@ -52,14 +42,12 @@ def prepare_data(**kwargs):
     clientes = pd.read_parquet(path_cli) if os.path.exists(path_cli) else pd.DataFrame()
     productos = pd.read_parquet(path_prod) if os.path.exists(path_prod) else pd.DataFrame()
 
-    
     transacciones["week_date"] = transacciones["purchase_date"].dt.to_period("W").apply(
         lambda r: r.start_time
     )
     transacciones = transacciones.sort_values("week_date")
     transacciones["week"] = pd.factorize(transacciones["week_date"])[0] + 1
     transacciones["month"] = transacciones["purchase_date"].dt.month
-
 
     weekly = (
         transacciones.groupby(["customer_id", "product_id", "week"], as_index=False)
@@ -69,7 +57,6 @@ def prepare_data(**kwargs):
             month=("month", "first")
         )
     )
-
 
     weeks_total = weekly["week"].unique()
     customers_total = weekly["customer_id"].unique()
@@ -91,12 +78,10 @@ def prepare_data(**kwargs):
     if not productos.empty:
         weekly_full = weekly_full.merge(productos, on="product_id", how="left")
 
-
     weekly_full["items"] = weekly_full["items"].fillna(0).astype("int32")
     weekly_full["n_orders"] = weekly_full["n_orders"].fillna(0).astype("int32")
     weekly_full["compra"] = (weekly_full["items"] > 0).astype("int8")
 
-    
     feat_pipe = Pipeline([
         ("hist", DatosHistoricos()),
         ("rec", RecenciaSemanal(inicio=1000)),
@@ -107,11 +92,6 @@ def prepare_data(**kwargs):
     
     df_feat = feat_pipe.fit_transform(weekly_full)
 
-    # Verificar que existe la columna target
-    if "compra" not in df_feat.columns:
-        raise ValueError("Se requiere la columna 'compra' en los datos históricos.")
-
-    # Definir columnas
     numeric_columns = [
         "num_deliver_per_week", "items_prev", "recencia_producto",
         "popularity_prev", "frec_producto", "size", "X", "Y"
@@ -123,7 +103,6 @@ def prepare_data(**kwargs):
         "customer_id", "product_id", "num_visit_per_week", "category",
         "n_orders", "items", "compra", "week"
     ]
-
 
     for c in numeric_columns + categorical_columns + drop_cols:
         if c not in df_feat.columns:
@@ -146,28 +125,22 @@ def prepare_data(**kwargs):
         ))
     ])
 
-    # Transformador completo
     preprocessor = ColumnTransformer([
         ("num", num_pipe, numeric_columns),
         ("cat", cat_pipe, categorical_columns),
         ("drop", "drop", drop_cols),
     ], remainder="drop", verbose_feature_names_out=False)
 
-    # Aplicar transformaciones
     X = preprocessor.fit_transform(df_feat)
     y = df_feat["compra"].astype(int).to_numpy()
 
-    
     joblib.dump(preprocessor, f"{model_dir}/preprocessor.pkl")
     joblib.dump(feat_pipe, f"{model_dir}/feature_pipeline.pkl")
 
-    if sp.issparse(X):
-        sp.save_npz(f"{proc_dir}/X_trainval.npz", X)
-    else:
-        np.save(f"{proc_dir}/X_trainval.npy", X)
+    sp.save_npz(f"{proc_dir}/X_trainval.npz", X)
     np.save(f"{proc_dir}/y_trainval.npy", y)
 
-    df_out = pd.DataFrame.sparse.from_spmatrix(X) if sp.issparse(X) else pd.DataFrame(X)
-    df_out["y"] = y
-    df_out.to_parquet(f"{proc_dir}/features.parquet")
-
+    keep_cols = numeric_columns + categorical_columns + ["customer_id", "product_id", "week"]
+    df_feat_clean = df_feat[keep_cols].copy()
+    df_feat_clean['y'] = y
+    df_feat_clean.to_parquet(f"{proc_dir}/features.parquet")
