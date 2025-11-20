@@ -90,7 +90,7 @@ Genera recomendaciones personalizadas considerando:
 
 ## Ejecución del Sistema
 
-Cada módulo tiene su propio archivo docker-compose. Se pueden ejecutar de forma independiente, el pipeline es actualizado de manera semanal, y se agregan nuevos datos en la carpeta data/new_data, donde se subirían los nuevos datos semanales.
+Cada módulo tiene su propio archivo docker-compose. Se pueden ejecutar de forma independiente, el pipeline es actualizado de manera semanal, y se agregan nuevos datos en la carpeta data/raw, donde se subirían los nuevos datos semanales.
 
 * Airflow: dentro de la carpeta airflow.
 * Aplicación principal: dentro de la carpeta app.
