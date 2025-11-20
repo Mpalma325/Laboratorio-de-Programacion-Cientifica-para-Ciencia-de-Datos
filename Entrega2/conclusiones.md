@@ -18,4 +18,4 @@ Oportunidades de mejora y extensiones futuras:
 
 - Incorporar validaciones de datos más rigurosas para evaluar qué tan realista es el caso de estudio y cuán cercano está a datos operacionales reales.
 - Optimizar el sistema de recomendación o integrar modelos adicionales en el bonus, avanzando hacia un flujo multi-modelo más complejo.
-- Mejorar la eficiencia del pipeline, reduciendo tiempos de procesamiento y consumo de memoria.
+- Mejorar la eficiencia del pipeline, reduciendo tiempos de procesamiento y consumo de memoria, actualmente con una RAM menor a unos 12 GB, no es posible ni siquiera pasar del paso de procesamiento de Data. 

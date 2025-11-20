@@ -103,12 +103,11 @@ Si se quieren utilizar de manera conjunta, o que corran todos los módulos a la 
 
 Levantar el sistema (Todos los contenedores): ./run_all.sh
 
-Verificar estado: ./check_status.sh
-
 Detener el sistema: ./stop_all.sh
 
-Reiniciar el sistema: ./restart_all.sh
 
+
+Es muy importante el uso de RAM para este proyecto (en conclusiones se observa un comentario muy importante al respecto), por lo que se requiere un computador con buena memoria RAM para poder correr los DAGs de manera exitosa.
 
 ## Resultados
 

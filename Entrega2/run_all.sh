@@ -1,10 +1,9 @@
-#!/bin/bash
+
 set -e  
 
 echo "🚀 Iniciando entorno completo de SodAI Drinks..."
 echo ""
 
-# Verificar Docker
 echo "🔍 Verificando Docker y docker-compose..."
 if ! command -v docker &> /dev/null; then
   echo "❌ Docker no está instalado."; exit 1
@@ -15,22 +14,19 @@ fi
 echo "✅ Docker verificado"
 echo ""
 
-# Levantar Airflow
 echo "📊 Levantando Airflow..."
 cd airflow
 docker compose up --build -d
-echo "✅ Airflow levantado"
+echo "✅ Airflow iniciado (la inicialización puede tomar 20-30 segundos)"
 echo "   🌐 UI: http://localhost:8080"
 echo "   📋 DAG: predictive_pipeline_xgb"
 echo "   👤 Usuario: admin / Contraseña: admin"
 cd ..
 echo ""
 
-# Esperar que Airflow esté listo
-echo "⏳ Esperando que Airflow esté listo..."
-sleep 10
+echo "⏳ Esperando que Airflow esté completamente listo..."
+sleep 25
 
-# Levantar App principal
 echo "🎯 Levantando App principal..."
 cd app
 docker compose up --build -d
@@ -40,11 +36,9 @@ echo "   🎨 Frontend: http://localhost:7860"
 cd ..
 echo ""
 
-# Esperar que App esté lista
 echo "⏳ Esperando que App esté lista..."
 sleep 5
 
-# Levantar servicios Bonus
 echo "🎁 Levantando servicios Bonus..."
 cd bonus
 docker compose up --build -d
@@ -60,10 +54,6 @@ echo "      🎨 Frontend: http://localhost:7862"
 cd ..
 echo ""
 
-# Resumen final
-echo "════════════════════════════════════════════════════"
-echo "✅ TODO LISTO - Sistema SodAI Drinks en ejecución"
-echo "════════════════════════════════════════════════════"
 echo ""
 echo "📊 AIRFLOW (Pipeline de datos)"
 echo "   → http://localhost:8080"
@@ -86,9 +76,4 @@ echo ""
 echo "🛑 Para detener todos los servicios:"
 echo "   ./stop_all.sh"
 echo ""
-echo "🔄 Para reiniciar todo:"
-echo "   ./restart_all.sh"
-echo ""
-echo "📝 Para ver logs:"
-echo "   docker compose logs -f [nombre-servicio]"
 echo ""
