@@ -98,9 +98,10 @@ Cada módulo tiene su propio archivo docker-compose. Se pueden ejecutar de forma
 * Recsys: dentro de bonus/recsys.
 
 
-Si se quieren utilizar de manera conjunta, o que corran todos los módulos a la vez, se puede usar el archivo run all, con los siguientes comandos a utilizar:
+Si se quieren utilizar de manera conjunta, o que corran todos los módulos a la vez, se puede usar el archivo run all, con los siguientes comandos a utilizar, todos estos en la terminal de git bash:
 
-Levantar el sistema: ./run_all.sh
+
+Levantar el sistema (Todos los contenedores): ./run_all.sh
 
 Verificar estado: ./check_status.sh
 
