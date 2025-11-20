@@ -37,7 +37,6 @@ class ChatResponse(BaseModel):
 def _load_transactions() -> pd.DataFrame:
     """Carga las transacciones desde raw/transacciones.parquet."""
     try:
-        # Primero intenta cargar desde raw (datos originales)
         trans_path = os.path.join(DATA_DIR, "raw", "transacciones.parquet")
         print(f"Buscando transacciones en: {trans_path}")
         
@@ -48,12 +47,10 @@ def _load_transactions() -> pd.DataFrame:
             print(f"Tipo de customer_id: {df['customer_id'].dtype if 'customer_id' in df.columns else 'N/A'}")
             print(f"Ejemplo de customer_ids: {df['customer_id'].head().tolist() if 'customer_id' in df.columns else 'N/A'}")
             
-            # NO convertir customer_id a string, dejarlo como int
             if "product_id" in df.columns:
                 df["product_id"] = df["product_id"].astype(str)
             return df
         
-        # Si no existe en raw, busca en processed
         trans_dir = os.path.join(DATA_DIR, "processed")
         print(f"Buscando en processed: {trans_dir}")
         
@@ -70,7 +67,6 @@ def _load_transactions() -> pd.DataFrame:
                 print(f"Transacciones cargadas: {len(df)} registros")
                 print(f"Columnas: {df.columns.tolist()}")
                 
-                # NO convertir customer_id a string, dejarlo como int
                 if "product_id" in df.columns:
                     df["product_id"] = df["product_id"].astype(str)
                 return df
@@ -155,8 +151,7 @@ def _get_data_summary() -> dict:
 def _answer_with_data(question: str) -> dict:
     """Responde preguntas usando los datos directamente."""
     question_lower = question.lower()
-    
-    # Cargar datos
+
     transactions_df = _load_transactions()
     predictions_df = _load_predictions()
     products_df = _load_products()
@@ -164,7 +159,7 @@ def _answer_with_data(question: str) -> dict:
     answer = ""
     context = {}
     
-    # Preguntas sobre clientes únicos
+
     if "cuántos clientes" in question_lower or "clientes únicos" in question_lower:
         unique_customers = int(transactions_df["customer_id"].nunique()) if "customer_id" in transactions_df.columns else 0
         answer = f"Hay {unique_customers:,} clientes únicos en el dataset de transacciones."
@@ -172,13 +167,13 @@ def _answer_with_data(question: str) -> dict:
     
     # Preguntas sobre transacciones de un cliente específico
     elif "transacciones" in question_lower and "cliente" in question_lower:
-        # Intentar extraer el customer_id de la pregunta
+
         words = question.split()
         customer_id = None
         for i, word in enumerate(words):
             if word.lower() in ["cliente", "customer"] and i + 1 < len(words):
                 potential_id = words[i + 1].strip("?,.")
-                # Intentar convertir a int para validar
+
                 try:
                     customer_id = int(potential_id)
                     break
@@ -220,7 +215,7 @@ def _answer_with_data(question: str) -> dict:
         context["total_predictions"] = total_preds
         context["unique_customers_predictions"] = unique_customers_pred
     
-    # Pregunta general o no reconocida
+    
     else:
         summary = _get_data_summary()
         answer = f"""No entendí exactamente tu pregunta, pero aquí hay un resumen de los datos disponibles:
@@ -322,10 +317,9 @@ def get_customer_stats(customer_id: int):
     print(f"Primeros 5 customer_ids: {transactions_df['customer_id'].head().tolist()}")
     print(f"Customer IDs únicos (primeros 10): {sorted(transactions_df['customer_id'].unique()[:10].tolist())}")
     
-    # Intentar la búsqueda
+
     print(f"¿{customer_id} en valores? {customer_id in transactions_df['customer_id'].values}")
     
-    # Convertir a numpy int32 para asegurar compatibilidad
     import numpy as np
     customer_id_np = np.int32(customer_id)
     print(f"Buscando como np.int32: {customer_id_np}")
@@ -334,11 +328,10 @@ def get_customer_stats(customer_id: int):
     print(f"Registros encontrados: {len(customer_data)}")
     
     if customer_data.empty:
-        # Ver si existe con alguna variación
         mask = transactions_df["customer_id"] == customer_id
         print(f"Registros con mask directo: {mask.sum()}")
         
-        # Buscar valores cercanos
+
         unique_customers = sorted(transactions_df["customer_id"].unique()[:20].tolist())
         raise HTTPException(
             status_code=404,
@@ -369,11 +362,10 @@ def list_customers(limit: int = 100):
             detail="No hay datos de transacciones disponibles",
         )
     
-    # Obtener clientes únicos y ordenarlos
     customers = sorted(transactions_df["customer_id"].unique().tolist())
     total_customers = len(customers)
     
-    # Limitar la cantidad de resultados
+
     customers_sample = customers[:limit]
     
     return {

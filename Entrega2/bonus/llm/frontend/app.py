@@ -18,7 +18,6 @@ WELCOME_MESSAGE = """
 - ¿Cuántas predicciones hay?
 
 ---
-**Nota:** Analizo datos reales de tu sistema de Airflow.
 """
 
 
@@ -58,7 +57,7 @@ def chat_with_bot(message, history):
     data, err = _safe_request("POST", f"{BACKEND_URL}/chat", json=payload)
     
     if err:
-        bot_response = f"❌ Error al procesar tu pregunta: {err}"
+        bot_response = f" Error al procesar tu pregunta: {err}"
     else:
         bot_response = data.get("answer", "No obtuve respuesta del servidor.")
     
@@ -85,7 +84,6 @@ def get_customer_stats(customer_id):
     
     customer_id = customer_id.strip()
     
-    # Intentar convertir a int
     try:
         customer_id_int = int(customer_id)
     except ValueError:
@@ -126,7 +124,7 @@ def list_available_customers(limit):
 - **Mostrando:** {showing:,} clientes
     """
     
-    # Formatear lista de clientes en columnas para mejor visualización
+
     customers_json = json.dumps(customers, indent=2, ensure_ascii=False)
     
     return info, customers_json
@@ -142,7 +140,6 @@ def check_health():
     return json.dumps(data, indent=2, ensure_ascii=False)
 
 
-# Crear interfaz de Gradio
 with gr.Blocks(title="SodAI LLM Chatbot") as demo:
     gr.Markdown(WELCOME_MESSAGE)
     
@@ -163,7 +160,7 @@ with gr.Blocks(title="SodAI LLM Chatbot") as demo:
                 submit_btn = gr.Button("📤 Enviar", variant="primary")
                 clear_btn = gr.Button("🗑️ Limpiar Chat")
             
-            # Ejemplos de preguntas (sin preguntas de ventas)
+            
             gr.Examples(
                 examples=[
                     ["¿Cuántos clientes únicos hay en el dataset?"],

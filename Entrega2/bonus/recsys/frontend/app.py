@@ -55,7 +55,7 @@ def get_recommendations(customer_id, top_n=5):
     if not recommendations:
         return "⚠️ No se encontraron recomendaciones para este cliente", None, ""
     
-    # Crear DataFrame para mostrar (solo Rank, Product ID y Score)
+
     df = pd.DataFrame([
         {
             "Rank": rec["rank"],
@@ -65,7 +65,7 @@ def get_recommendations(customer_id, top_n=5):
         for rec in recommendations
     ])
     
-    # Mensaje de éxito
+    
     week = data.get("week", "N/A")
     total = data.get("total_products", 0)
     
@@ -77,7 +77,7 @@ def get_recommendations(customer_id, top_n=5):
 - **Top recomendaciones mostradas:** {len(recommendations)}
     """
     
-    # Info detallada en JSON
+
     json_output = json.dumps(data, indent=2, ensure_ascii=False)
     
     return summary, df, json_output
@@ -120,7 +120,7 @@ def list_sample_customers():
     summary = f"### 👥 Total de clientes en sistema: {total}\n\n"
     summary += f"Mostrando primeros {len(customers)} clientes:"
     
-    # Crear DataFrame
+    
     df = pd.DataFrame({
         "Customer ID": customers
     })
@@ -145,12 +145,12 @@ def check_health():
     
     return json.dumps(data, indent=2, ensure_ascii=False)
 
-# Crear interfaz de Gradio
+
 with gr.Blocks(title="SodAI RecSys", theme=gr.themes.Soft()) as demo:
     gr.Markdown(HELP_TEXT)
     
     with gr.Tabs():
-        # TAB 1: Recomendaciones
+        
         with gr.Tab("🎯 Recomendaciones"):
             gr.Markdown("### Genera recomendaciones personalizadas para un cliente")
             
@@ -186,7 +186,7 @@ with gr.Blocks(title="SodAI RecSys", theme=gr.themes.Soft()) as demo:
                 outputs=[status_output, recommendations_table, json_output]
             )
         
-        # TAB 2: Explorar Clientes
+
         with gr.Tab("👥 Explorar Clientes"):
             gr.Markdown("### Explora los clientes disponibles en el sistema")
             
@@ -221,7 +221,7 @@ with gr.Blocks(title="SodAI RecSys", theme=gr.themes.Soft()) as demo:
                 outputs=[customers_summary, customers_table]
             )
         
-        # TAB 3: Estadísticas
+        
         with gr.Tab("📊 Estadísticas"):
             gr.Markdown("### Estadísticas generales del sistema de recomendación")
             
@@ -237,7 +237,7 @@ with gr.Blocks(title="SodAI RecSys", theme=gr.themes.Soft()) as demo:
                     health_btn.click(check_health, outputs=[health_output])
     
     gr.Markdown("---")
-    gr.Markdown("**SodAI Drinks RecSys** - Sistema de Recomendación v1.0 | Powered by Gradio + FastAPI")
+    gr.Markdown("**SodAI Drinks RecSys** - Sistema de Recomendación v1.0 | Gradio + FastAPI")
 
 if __name__ == "__main__":
     demo.launch(

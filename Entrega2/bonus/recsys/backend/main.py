@@ -7,17 +7,14 @@ import glob
 import pandas as pd
 
 APP_NAME = "SodAI RecSys Backend"
-DESCRIPTION = "Sistema de recomendación que genera 5 productos sugeridos para cualquier cliente"
+DESCRIPTION = "Sistema de recomendación que genera los productos más sugeridos para cualquier cliente"
 
-# Estos valores los sobreescribes en docker-compose:
-# PREDICTIONS_DIR=/mnt/preds, PRODUCTS_DIR=/mnt/products, TRANSACTIONS_DIR=/mnt/transactions
 PREDICTIONS_DIR = os.getenv("PREDICTIONS_DIR", "/opt/airflow/data/predictions")
 PRODUCTS_DIR = os.getenv("PRODUCTS_DIR", "/opt/airflow/data/products")
 TRANSACTIONS_DIR = os.getenv("TRANSACTIONS_DIR", "/opt/airflow/data/transactions")
 
 app = FastAPI(title=APP_NAME, description=DESCRIPTION, version="1.0.0")
 
-# CORS para comunicación con frontend
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -67,7 +64,7 @@ def _read_latest_preds() -> tuple[pd.DataFrame, str]:
     path = _get_latest_preds_path()
     df = pd.read_parquet(path)
 
-    # Asegurar tipos de datos
+
     if "customer_id" in df.columns:
         df["customer_id"] = df["customer_id"].astype(str)
     if "product_id" in df.columns:
@@ -122,7 +119,7 @@ def _read_latest_transactions() -> tuple[pd.DataFrame, str]:
     
     df = pd.read_parquet(path)
     
-    # Asegurar tipos de datos correctos
+
     if "customer_id" in df.columns:
         df["customer_id"] = df["customer_id"].astype(str)
     if "product_id" in df.columns:
@@ -155,7 +152,7 @@ def list_customers():
     customers = df["customer_id"].unique().tolist()
     return {
         "total_customers": len(customers),
-        "customers": customers[:100],  # Limitar a 100 para no saturar
+        "customers": customers[:100],  
     }
 
 
@@ -195,7 +192,6 @@ def recommend_products(customer_id: str, top_n: int = 5):
             detail="top_n debe estar entre 1 y 20",
         )
 
-    # Leer predicciones
     df, _ = _read_latest_preds()
     customer_df = df[df["customer_id"] == customer_id].copy()
 
@@ -211,10 +207,8 @@ def recommend_products(customer_id: str, top_n: int = 5):
             detail="La columna 'score' no existe en las predicciones",
         )
 
-    # Ordenar por score descendente y tomar top N
     customer_df = customer_df.sort_values("score", ascending=False).head(top_n)
 
-    # Crear recomendaciones (solo Rank, Product ID y Score)
     recommendations: list[RecommendationItem] = []
     for idx, (_, row) in enumerate(customer_df.iterrows(), start=1):
         product_id = str(row["product_id"])
@@ -245,8 +239,7 @@ def get_statistics():
     try:
         df, path = _read_latest_preds()
     except FileNotFoundError:
-        # No hay archivos de predicciones: devolvemos estadísticas vacías,
-        # pero con el mismo formato que usa el frontend.
+
         return {
             "predictions": {
                 "total": 0,
@@ -281,7 +274,6 @@ def get_statistics():
                 "latest_file": os.path.basename(trans_path) if trans_path else None,
             }
     except Exception as e:
-        # Si hay error leyendo transacciones, no fallar todo el endpoint
         transactions_stats = {"error": str(e)}
 
     return {

@@ -46,12 +46,12 @@ def detect_drift(**kwargs):
         r = ref[c].to_numpy()
         k = cur[c].to_numpy()
         
-        # Solo aplicar isnan si es columna numérica
+        
         if np.issubdtype(r.dtype, np.number):
             r = r[~np.isnan(r)]
             k = k[~np.isnan(k)]
         else:
-            # Para categóricas, remover None/NaN usando pandas
+
             r = r[pd.notna(r)]
             k = k[pd.notna(k)]
         

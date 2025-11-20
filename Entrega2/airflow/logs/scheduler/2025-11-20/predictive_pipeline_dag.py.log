@@ -3753,3 +3753,251 @@
 [2025-11-20T22:07:26.287+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:07:26.287+0000] {dag.py:3096} INFO - Sync 1 DAGs
 [2025-11-20T22:07:26.310+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:07:26.310+0000] {dag.py:3954} INFO - Setting next_dagrun for predictive_pipeline_xgb to 2025-11-23 00:00:00+00:00, run_after=2025-11-30 00:00:00+00:00
 [2025-11-20T22:07:26.361+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/predictive_pipeline_dag.py took 2.604 seconds
+[2025-11-20T22:07:56.801+0000] {processor.py:161} INFO - Started process (PID=182) to work on /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:07:56.802+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/predictive_pipeline_dag.py for tasks to queue
+[2025-11-20T22:07:56.804+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:07:56.804+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:07:58.545+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/_tracking_service/utils.py:140 FutureWarning: Filesystem tracking backend (e.g., './mlruns') is deprecated. Please switch to a database backend (e.g., 'sqlite:///mlflow.db'). For feedback, see: https://github.com/mlflow/mlflow/issues/18534
+[2025-11-20T22:07:59.316+0000] {processor.py:840} INFO - DAG(s) 'predictive_pipeline_xgb' retrieved from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:07:59.341+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:07:59.340+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-11-20T22:07:59.363+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:07:59.363+0000] {dag.py:3954} INFO - Setting next_dagrun for predictive_pipeline_xgb to 2025-11-23 00:00:00+00:00, run_after=2025-11-30 00:00:00+00:00
+[2025-11-20T22:07:59.411+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/predictive_pipeline_dag.py took 2.617 seconds
+[2025-11-20T22:08:29.787+0000] {processor.py:161} INFO - Started process (PID=192) to work on /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:08:29.789+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/predictive_pipeline_dag.py for tasks to queue
+[2025-11-20T22:08:29.791+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:08:29.790+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:08:31.714+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/_tracking_service/utils.py:140 FutureWarning: Filesystem tracking backend (e.g., './mlruns') is deprecated. Please switch to a database backend (e.g., 'sqlite:///mlflow.db'). For feedback, see: https://github.com/mlflow/mlflow/issues/18534
+[2025-11-20T22:08:32.477+0000] {processor.py:840} INFO - DAG(s) 'predictive_pipeline_xgb' retrieved from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:08:32.504+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:08:32.502+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-11-20T22:08:32.526+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:08:32.526+0000] {dag.py:3954} INFO - Setting next_dagrun for predictive_pipeline_xgb to 2025-11-23 00:00:00+00:00, run_after=2025-11-30 00:00:00+00:00
+[2025-11-20T22:08:32.579+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/predictive_pipeline_dag.py took 2.799 seconds
+[2025-11-20T22:09:03.012+0000] {processor.py:161} INFO - Started process (PID=202) to work on /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:09:03.013+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/predictive_pipeline_dag.py for tasks to queue
+[2025-11-20T22:09:03.015+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:09:03.015+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:09:04.668+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/_tracking_service/utils.py:140 FutureWarning: Filesystem tracking backend (e.g., './mlruns') is deprecated. Please switch to a database backend (e.g., 'sqlite:///mlflow.db'). For feedback, see: https://github.com/mlflow/mlflow/issues/18534
+[2025-11-20T22:09:05.405+0000] {processor.py:840} INFO - DAG(s) 'predictive_pipeline_xgb' retrieved from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:09:05.430+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:09:05.429+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-11-20T22:09:05.451+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:09:05.451+0000] {dag.py:3954} INFO - Setting next_dagrun for predictive_pipeline_xgb to 2025-11-23 00:00:00+00:00, run_after=2025-11-30 00:00:00+00:00
+[2025-11-20T22:09:05.498+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/predictive_pipeline_dag.py took 2.492 seconds
+[2025-11-20T22:09:35.837+0000] {processor.py:161} INFO - Started process (PID=212) to work on /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:09:35.838+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/predictive_pipeline_dag.py for tasks to queue
+[2025-11-20T22:09:35.839+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:09:35.839+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:09:37.501+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/_tracking_service/utils.py:140 FutureWarning: Filesystem tracking backend (e.g., './mlruns') is deprecated. Please switch to a database backend (e.g., 'sqlite:///mlflow.db'). For feedback, see: https://github.com/mlflow/mlflow/issues/18534
+[2025-11-20T22:09:38.124+0000] {processor.py:840} INFO - DAG(s) 'predictive_pipeline_xgb' retrieved from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:09:38.245+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:09:38.244+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-11-20T22:09:38.266+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:09:38.266+0000] {dag.py:3954} INFO - Setting next_dagrun for predictive_pipeline_xgb to 2025-11-23 00:00:00+00:00, run_after=2025-11-30 00:00:00+00:00
+[2025-11-20T22:09:38.314+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/predictive_pipeline_dag.py took 2.483 seconds
+[2025-11-20T22:10:08.421+0000] {processor.py:161} INFO - Started process (PID=222) to work on /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:10:08.422+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/predictive_pipeline_dag.py for tasks to queue
+[2025-11-20T22:10:08.423+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:10:08.423+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:10:10.208+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/_tracking_service/utils.py:140 FutureWarning: Filesystem tracking backend (e.g., './mlruns') is deprecated. Please switch to a database backend (e.g., 'sqlite:///mlflow.db'). For feedback, see: https://github.com/mlflow/mlflow/issues/18534
+[2025-11-20T22:10:10.926+0000] {processor.py:840} INFO - DAG(s) 'predictive_pipeline_xgb' retrieved from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:10:10.950+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:10:10.950+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-11-20T22:10:10.971+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:10:10.971+0000] {dag.py:3954} INFO - Setting next_dagrun for predictive_pipeline_xgb to 2025-11-23 00:00:00+00:00, run_after=2025-11-30 00:00:00+00:00
+[2025-11-20T22:10:11.019+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/predictive_pipeline_dag.py took 2.604 seconds
+[2025-11-20T22:10:41.256+0000] {processor.py:161} INFO - Started process (PID=232) to work on /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:10:41.257+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/predictive_pipeline_dag.py for tasks to queue
+[2025-11-20T22:10:41.259+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:10:41.259+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:10:42.972+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/_tracking_service/utils.py:140 FutureWarning: Filesystem tracking backend (e.g., './mlruns') is deprecated. Please switch to a database backend (e.g., 'sqlite:///mlflow.db'). For feedback, see: https://github.com/mlflow/mlflow/issues/18534
+[2025-11-20T22:10:43.673+0000] {processor.py:840} INFO - DAG(s) 'predictive_pipeline_xgb' retrieved from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:10:43.697+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:10:43.697+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-11-20T22:10:43.717+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:10:43.717+0000] {dag.py:3954} INFO - Setting next_dagrun for predictive_pipeline_xgb to 2025-11-23 00:00:00+00:00, run_after=2025-11-30 00:00:00+00:00
+[2025-11-20T22:10:43.765+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/predictive_pipeline_dag.py took 2.515 seconds
+[2025-11-20T22:11:14.277+0000] {processor.py:161} INFO - Started process (PID=242) to work on /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:11:14.278+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/predictive_pipeline_dag.py for tasks to queue
+[2025-11-20T22:11:14.280+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:11:14.280+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:11:16.264+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/_tracking_service/utils.py:140 FutureWarning: Filesystem tracking backend (e.g., './mlruns') is deprecated. Please switch to a database backend (e.g., 'sqlite:///mlflow.db'). For feedback, see: https://github.com/mlflow/mlflow/issues/18534
+[2025-11-20T22:11:17.344+0000] {processor.py:840} INFO - DAG(s) 'predictive_pipeline_xgb' retrieved from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:11:17.369+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:11:17.369+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-11-20T22:11:17.391+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:11:17.391+0000] {dag.py:3954} INFO - Setting next_dagrun for predictive_pipeline_xgb to 2025-11-23 00:00:00+00:00, run_after=2025-11-30 00:00:00+00:00
+[2025-11-20T22:11:17.441+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/predictive_pipeline_dag.py took 3.170 seconds
+[2025-11-20T22:11:47.791+0000] {processor.py:161} INFO - Started process (PID=252) to work on /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:11:47.792+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/predictive_pipeline_dag.py for tasks to queue
+[2025-11-20T22:11:47.793+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:11:47.793+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:11:49.655+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/_tracking_service/utils.py:140 FutureWarning: Filesystem tracking backend (e.g., './mlruns') is deprecated. Please switch to a database backend (e.g., 'sqlite:///mlflow.db'). For feedback, see: https://github.com/mlflow/mlflow/issues/18534
+[2025-11-20T22:11:50.555+0000] {processor.py:840} INFO - DAG(s) 'predictive_pipeline_xgb' retrieved from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:11:50.579+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:11:50.579+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-11-20T22:11:50.605+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:11:50.605+0000] {dag.py:3954} INFO - Setting next_dagrun for predictive_pipeline_xgb to 2025-11-23 00:00:00+00:00, run_after=2025-11-30 00:00:00+00:00
+[2025-11-20T22:11:50.656+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/predictive_pipeline_dag.py took 2.871 seconds
+[2025-11-20T22:12:21.040+0000] {processor.py:161} INFO - Started process (PID=262) to work on /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:12:21.041+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/predictive_pipeline_dag.py for tasks to queue
+[2025-11-20T22:12:21.043+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:12:21.042+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:12:22.955+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/_tracking_service/utils.py:140 FutureWarning: Filesystem tracking backend (e.g., './mlruns') is deprecated. Please switch to a database backend (e.g., 'sqlite:///mlflow.db'). For feedback, see: https://github.com/mlflow/mlflow/issues/18534
+[2025-11-20T22:12:23.808+0000] {processor.py:840} INFO - DAG(s) 'predictive_pipeline_xgb' retrieved from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:12:23.839+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:12:23.839+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-11-20T22:12:23.866+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:12:23.866+0000] {dag.py:3954} INFO - Setting next_dagrun for predictive_pipeline_xgb to 2025-11-23 00:00:00+00:00, run_after=2025-11-30 00:00:00+00:00
+[2025-11-20T22:12:23.940+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/predictive_pipeline_dag.py took 2.907 seconds
+[2025-11-20T22:12:54.082+0000] {processor.py:161} INFO - Started process (PID=272) to work on /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:12:54.083+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/predictive_pipeline_dag.py for tasks to queue
+[2025-11-20T22:12:54.085+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:12:54.084+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:12:56.145+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/_tracking_service/utils.py:140 FutureWarning: Filesystem tracking backend (e.g., './mlruns') is deprecated. Please switch to a database backend (e.g., 'sqlite:///mlflow.db'). For feedback, see: https://github.com/mlflow/mlflow/issues/18534
+[2025-11-20T22:12:56.902+0000] {processor.py:840} INFO - DAG(s) 'predictive_pipeline_xgb' retrieved from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:12:56.927+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:12:56.926+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-11-20T22:12:56.950+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:12:56.950+0000] {dag.py:3954} INFO - Setting next_dagrun for predictive_pipeline_xgb to 2025-11-23 00:00:00+00:00, run_after=2025-11-30 00:00:00+00:00
+[2025-11-20T22:12:57.001+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/predictive_pipeline_dag.py took 2.928 seconds
+[2025-11-20T22:13:27.425+0000] {processor.py:161} INFO - Started process (PID=282) to work on /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:13:27.426+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/predictive_pipeline_dag.py for tasks to queue
+[2025-11-20T22:13:27.430+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:13:27.429+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:13:29.353+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/_tracking_service/utils.py:140 FutureWarning: Filesystem tracking backend (e.g., './mlruns') is deprecated. Please switch to a database backend (e.g., 'sqlite:///mlflow.db'). For feedback, see: https://github.com/mlflow/mlflow/issues/18534
+[2025-11-20T22:13:30.099+0000] {processor.py:840} INFO - DAG(s) 'predictive_pipeline_xgb' retrieved from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:13:30.126+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:13:30.124+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-11-20T22:13:30.149+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:13:30.149+0000] {dag.py:3954} INFO - Setting next_dagrun for predictive_pipeline_xgb to 2025-11-23 00:00:00+00:00, run_after=2025-11-30 00:00:00+00:00
+[2025-11-20T22:13:30.199+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/predictive_pipeline_dag.py took 2.784 seconds
+[2025-11-20T22:14:00.622+0000] {processor.py:161} INFO - Started process (PID=292) to work on /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:14:00.623+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/predictive_pipeline_dag.py for tasks to queue
+[2025-11-20T22:14:00.625+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:14:00.625+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:14:02.311+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/_tracking_service/utils.py:140 FutureWarning: Filesystem tracking backend (e.g., './mlruns') is deprecated. Please switch to a database backend (e.g., 'sqlite:///mlflow.db'). For feedback, see: https://github.com/mlflow/mlflow/issues/18534
+[2025-11-20T22:14:03.016+0000] {processor.py:840} INFO - DAG(s) 'predictive_pipeline_xgb' retrieved from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:14:03.146+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:14:03.146+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-11-20T22:14:03.169+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:14:03.169+0000] {dag.py:3954} INFO - Setting next_dagrun for predictive_pipeline_xgb to 2025-11-23 00:00:00+00:00, run_after=2025-11-30 00:00:00+00:00
+[2025-11-20T22:14:03.218+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/predictive_pipeline_dag.py took 2.602 seconds
+[2025-11-20T22:14:33.667+0000] {processor.py:161} INFO - Started process (PID=302) to work on /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:14:33.668+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/predictive_pipeline_dag.py for tasks to queue
+[2025-11-20T22:14:33.670+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:14:33.670+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:14:35.646+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/_tracking_service/utils.py:140 FutureWarning: Filesystem tracking backend (e.g., './mlruns') is deprecated. Please switch to a database backend (e.g., 'sqlite:///mlflow.db'). For feedback, see: https://github.com/mlflow/mlflow/issues/18534
+[2025-11-20T22:14:36.310+0000] {processor.py:840} INFO - DAG(s) 'predictive_pipeline_xgb' retrieved from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:14:36.438+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:14:36.437+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-11-20T22:14:36.457+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:14:36.456+0000] {dag.py:3954} INFO - Setting next_dagrun for predictive_pipeline_xgb to 2025-11-23 00:00:00+00:00, run_after=2025-11-30 00:00:00+00:00
+[2025-11-20T22:14:36.509+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/predictive_pipeline_dag.py took 2.847 seconds
+[2025-11-20T22:15:06.896+0000] {processor.py:161} INFO - Started process (PID=312) to work on /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:15:06.897+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/predictive_pipeline_dag.py for tasks to queue
+[2025-11-20T22:15:06.898+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:15:06.898+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:15:08.634+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/_tracking_service/utils.py:140 FutureWarning: Filesystem tracking backend (e.g., './mlruns') is deprecated. Please switch to a database backend (e.g., 'sqlite:///mlflow.db'). For feedback, see: https://github.com/mlflow/mlflow/issues/18534
+[2025-11-20T22:15:09.361+0000] {processor.py:840} INFO - DAG(s) 'predictive_pipeline_xgb' retrieved from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:15:09.385+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:15:09.385+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-11-20T22:15:09.406+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:15:09.406+0000] {dag.py:3954} INFO - Setting next_dagrun for predictive_pipeline_xgb to 2025-11-23 00:00:00+00:00, run_after=2025-11-30 00:00:00+00:00
+[2025-11-20T22:15:09.453+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/predictive_pipeline_dag.py took 2.564 seconds
+[2025-11-20T22:15:39.816+0000] {processor.py:161} INFO - Started process (PID=322) to work on /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:15:39.817+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/predictive_pipeline_dag.py for tasks to queue
+[2025-11-20T22:15:39.820+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:15:39.819+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:15:41.700+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/_tracking_service/utils.py:140 FutureWarning: Filesystem tracking backend (e.g., './mlruns') is deprecated. Please switch to a database backend (e.g., 'sqlite:///mlflow.db'). For feedback, see: https://github.com/mlflow/mlflow/issues/18534
+[2025-11-20T22:15:42.476+0000] {processor.py:840} INFO - DAG(s) 'predictive_pipeline_xgb' retrieved from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:15:42.500+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:15:42.500+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-11-20T22:15:42.522+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:15:42.522+0000] {dag.py:3954} INFO - Setting next_dagrun for predictive_pipeline_xgb to 2025-11-23 00:00:00+00:00, run_after=2025-11-30 00:00:00+00:00
+[2025-11-20T22:15:42.569+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/predictive_pipeline_dag.py took 2.761 seconds
+[2025-11-20T22:16:12.948+0000] {processor.py:161} INFO - Started process (PID=332) to work on /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:16:12.949+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/predictive_pipeline_dag.py for tasks to queue
+[2025-11-20T22:16:12.951+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:16:12.950+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:16:14.655+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/_tracking_service/utils.py:140 FutureWarning: Filesystem tracking backend (e.g., './mlruns') is deprecated. Please switch to a database backend (e.g., 'sqlite:///mlflow.db'). For feedback, see: https://github.com/mlflow/mlflow/issues/18534
+[2025-11-20T22:16:15.493+0000] {processor.py:840} INFO - DAG(s) 'predictive_pipeline_xgb' retrieved from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:16:15.515+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:16:15.515+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-11-20T22:16:15.539+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:16:15.539+0000] {dag.py:3954} INFO - Setting next_dagrun for predictive_pipeline_xgb to 2025-11-23 00:00:00+00:00, run_after=2025-11-30 00:00:00+00:00
+[2025-11-20T22:16:15.587+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/predictive_pipeline_dag.py took 2.523 seconds
+[2025-11-20T22:16:45.980+0000] {processor.py:161} INFO - Started process (PID=342) to work on /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:16:45.981+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/predictive_pipeline_dag.py for tasks to queue
+[2025-11-20T22:16:45.982+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:16:45.982+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:16:47.994+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/_tracking_service/utils.py:140 FutureWarning: Filesystem tracking backend (e.g., './mlruns') is deprecated. Please switch to a database backend (e.g., 'sqlite:///mlflow.db'). For feedback, see: https://github.com/mlflow/mlflow/issues/18534
+[2025-11-20T22:16:48.837+0000] {processor.py:840} INFO - DAG(s) 'predictive_pipeline_xgb' retrieved from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:16:48.862+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:16:48.861+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-11-20T22:16:48.884+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:16:48.883+0000] {dag.py:3954} INFO - Setting next_dagrun for predictive_pipeline_xgb to 2025-11-23 00:00:00+00:00, run_after=2025-11-30 00:00:00+00:00
+[2025-11-20T22:16:48.934+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/predictive_pipeline_dag.py took 2.961 seconds
+[2025-11-20T22:17:19.334+0000] {processor.py:161} INFO - Started process (PID=352) to work on /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:17:19.335+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/predictive_pipeline_dag.py for tasks to queue
+[2025-11-20T22:17:19.336+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:17:19.336+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:17:21.131+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/_tracking_service/utils.py:140 FutureWarning: Filesystem tracking backend (e.g., './mlruns') is deprecated. Please switch to a database backend (e.g., 'sqlite:///mlflow.db'). For feedback, see: https://github.com/mlflow/mlflow/issues/18534
+[2025-11-20T22:17:21.921+0000] {processor.py:840} INFO - DAG(s) 'predictive_pipeline_xgb' retrieved from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:17:21.945+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:17:21.945+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-11-20T22:17:21.968+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:17:21.967+0000] {dag.py:3954} INFO - Setting next_dagrun for predictive_pipeline_xgb to 2025-11-23 00:00:00+00:00, run_after=2025-11-30 00:00:00+00:00
+[2025-11-20T22:17:22.031+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/predictive_pipeline_dag.py took 2.703 seconds
+[2025-11-20T22:17:52.153+0000] {processor.py:161} INFO - Started process (PID=362) to work on /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:17:52.155+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/predictive_pipeline_dag.py for tasks to queue
+[2025-11-20T22:17:52.158+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:17:52.157+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:17:53.970+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/_tracking_service/utils.py:140 FutureWarning: Filesystem tracking backend (e.g., './mlruns') is deprecated. Please switch to a database backend (e.g., 'sqlite:///mlflow.db'). For feedback, see: https://github.com/mlflow/mlflow/issues/18534
+[2025-11-20T22:17:54.703+0000] {processor.py:840} INFO - DAG(s) 'predictive_pipeline_xgb' retrieved from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:17:54.728+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:17:54.727+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-11-20T22:17:54.749+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:17:54.749+0000] {dag.py:3954} INFO - Setting next_dagrun for predictive_pipeline_xgb to 2025-11-23 00:00:00+00:00, run_after=2025-11-30 00:00:00+00:00
+[2025-11-20T22:17:54.798+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/predictive_pipeline_dag.py took 2.656 seconds
+[2025-11-20T22:18:24.946+0000] {processor.py:161} INFO - Started process (PID=372) to work on /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:18:24.947+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/predictive_pipeline_dag.py for tasks to queue
+[2025-11-20T22:18:24.948+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:18:24.948+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:18:26.646+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/_tracking_service/utils.py:140 FutureWarning: Filesystem tracking backend (e.g., './mlruns') is deprecated. Please switch to a database backend (e.g., 'sqlite:///mlflow.db'). For feedback, see: https://github.com/mlflow/mlflow/issues/18534
+[2025-11-20T22:18:27.370+0000] {processor.py:840} INFO - DAG(s) 'predictive_pipeline_xgb' retrieved from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:18:27.395+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:18:27.394+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-11-20T22:18:27.415+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:18:27.415+0000] {dag.py:3954} INFO - Setting next_dagrun for predictive_pipeline_xgb to 2025-11-23 00:00:00+00:00, run_after=2025-11-30 00:00:00+00:00
+[2025-11-20T22:18:27.461+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/predictive_pipeline_dag.py took 2.522 seconds
+[2025-11-20T22:18:57.915+0000] {processor.py:161} INFO - Started process (PID=382) to work on /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:18:57.916+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/predictive_pipeline_dag.py for tasks to queue
+[2025-11-20T22:18:57.918+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:18:57.917+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:18:59.724+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/_tracking_service/utils.py:140 FutureWarning: Filesystem tracking backend (e.g., './mlruns') is deprecated. Please switch to a database backend (e.g., 'sqlite:///mlflow.db'). For feedback, see: https://github.com/mlflow/mlflow/issues/18534
+[2025-11-20T22:19:00.340+0000] {processor.py:840} INFO - DAG(s) 'predictive_pipeline_xgb' retrieved from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:19:00.474+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:19:00.474+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-11-20T22:19:00.495+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:19:00.495+0000] {dag.py:3954} INFO - Setting next_dagrun for predictive_pipeline_xgb to 2025-11-23 00:00:00+00:00, run_after=2025-11-30 00:00:00+00:00
+[2025-11-20T22:19:00.543+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/predictive_pipeline_dag.py took 2.636 seconds
+[2025-11-20T22:19:30.924+0000] {processor.py:161} INFO - Started process (PID=392) to work on /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:19:30.926+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/predictive_pipeline_dag.py for tasks to queue
+[2025-11-20T22:19:30.928+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:19:30.927+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:19:32.705+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/_tracking_service/utils.py:140 FutureWarning: Filesystem tracking backend (e.g., './mlruns') is deprecated. Please switch to a database backend (e.g., 'sqlite:///mlflow.db'). For feedback, see: https://github.com/mlflow/mlflow/issues/18534
+[2025-11-20T22:19:33.344+0000] {processor.py:840} INFO - DAG(s) 'predictive_pipeline_xgb' retrieved from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:19:33.465+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:19:33.464+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-11-20T22:19:33.486+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:19:33.486+0000] {dag.py:3954} INFO - Setting next_dagrun for predictive_pipeline_xgb to 2025-11-23 00:00:00+00:00, run_after=2025-11-30 00:00:00+00:00
+[2025-11-20T22:19:33.536+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/predictive_pipeline_dag.py took 2.618 seconds
+[2025-11-20T22:20:03.646+0000] {processor.py:161} INFO - Started process (PID=402) to work on /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:20:03.647+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/predictive_pipeline_dag.py for tasks to queue
+[2025-11-20T22:20:03.649+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:20:03.648+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:20:05.448+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/_tracking_service/utils.py:140 FutureWarning: Filesystem tracking backend (e.g., './mlruns') is deprecated. Please switch to a database backend (e.g., 'sqlite:///mlflow.db'). For feedback, see: https://github.com/mlflow/mlflow/issues/18534
+[2025-11-20T22:20:06.150+0000] {processor.py:840} INFO - DAG(s) 'predictive_pipeline_xgb' retrieved from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:20:06.173+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:20:06.173+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-11-20T22:20:06.195+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:20:06.195+0000] {dag.py:3954} INFO - Setting next_dagrun for predictive_pipeline_xgb to 2025-11-23 00:00:00+00:00, run_after=2025-11-30 00:00:00+00:00
+[2025-11-20T22:20:06.241+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/predictive_pipeline_dag.py took 2.602 seconds
+[2025-11-20T22:20:36.694+0000] {processor.py:161} INFO - Started process (PID=412) to work on /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:20:36.695+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/predictive_pipeline_dag.py for tasks to queue
+[2025-11-20T22:20:36.697+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:20:36.697+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:20:38.736+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/_tracking_service/utils.py:140 FutureWarning: Filesystem tracking backend (e.g., './mlruns') is deprecated. Please switch to a database backend (e.g., 'sqlite:///mlflow.db'). For feedback, see: https://github.com/mlflow/mlflow/issues/18534
+[2025-11-20T22:20:39.533+0000] {processor.py:840} INFO - DAG(s) 'predictive_pipeline_xgb' retrieved from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:20:39.560+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:20:39.559+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-11-20T22:20:39.580+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:20:39.580+0000] {dag.py:3954} INFO - Setting next_dagrun for predictive_pipeline_xgb to 2025-11-23 00:00:00+00:00, run_after=2025-11-30 00:00:00+00:00
+[2025-11-20T22:20:39.638+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/predictive_pipeline_dag.py took 2.950 seconds
+[2025-11-20T22:21:10.110+0000] {processor.py:161} INFO - Started process (PID=422) to work on /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:21:10.112+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/predictive_pipeline_dag.py for tasks to queue
+[2025-11-20T22:21:10.114+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:21:10.114+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:21:12.219+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/_tracking_service/utils.py:140 FutureWarning: Filesystem tracking backend (e.g., './mlruns') is deprecated. Please switch to a database backend (e.g., 'sqlite:///mlflow.db'). For feedback, see: https://github.com/mlflow/mlflow/issues/18534
+[2025-11-20T22:21:13.044+0000] {processor.py:840} INFO - DAG(s) 'predictive_pipeline_xgb' retrieved from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:21:13.069+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:21:13.069+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-11-20T22:21:13.095+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:21:13.094+0000] {dag.py:3954} INFO - Setting next_dagrun for predictive_pipeline_xgb to 2025-11-23 00:00:00+00:00, run_after=2025-11-30 00:00:00+00:00
+[2025-11-20T22:21:13.149+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/predictive_pipeline_dag.py took 3.046 seconds
+[2025-11-20T22:21:43.275+0000] {processor.py:161} INFO - Started process (PID=432) to work on /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:21:43.276+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/predictive_pipeline_dag.py for tasks to queue
+[2025-11-20T22:21:43.278+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:21:43.278+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:21:45.125+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/_tracking_service/utils.py:140 FutureWarning: Filesystem tracking backend (e.g., './mlruns') is deprecated. Please switch to a database backend (e.g., 'sqlite:///mlflow.db'). For feedback, see: https://github.com/mlflow/mlflow/issues/18534
+[2025-11-20T22:21:45.940+0000] {processor.py:840} INFO - DAG(s) 'predictive_pipeline_xgb' retrieved from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:21:45.967+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:21:45.966+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-11-20T22:21:45.990+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:21:45.990+0000] {dag.py:3954} INFO - Setting next_dagrun for predictive_pipeline_xgb to 2025-11-23 00:00:00+00:00, run_after=2025-11-30 00:00:00+00:00
+[2025-11-20T22:21:46.048+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/predictive_pipeline_dag.py took 2.779 seconds
+[2025-11-20T22:22:16.164+0000] {processor.py:161} INFO - Started process (PID=442) to work on /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:22:16.165+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/predictive_pipeline_dag.py for tasks to queue
+[2025-11-20T22:22:16.167+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:22:16.166+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:22:18.342+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/_tracking_service/utils.py:140 FutureWarning: Filesystem tracking backend (e.g., './mlruns') is deprecated. Please switch to a database backend (e.g., 'sqlite:///mlflow.db'). For feedback, see: https://github.com/mlflow/mlflow/issues/18534
+[2025-11-20T22:22:19.262+0000] {processor.py:840} INFO - DAG(s) 'predictive_pipeline_xgb' retrieved from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:22:19.292+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:22:19.291+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-11-20T22:22:19.320+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:22:19.319+0000] {dag.py:3954} INFO - Setting next_dagrun for predictive_pipeline_xgb to 2025-11-23 00:00:00+00:00, run_after=2025-11-30 00:00:00+00:00
+[2025-11-20T22:22:19.385+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/predictive_pipeline_dag.py took 3.087 seconds
+[2025-11-20T22:22:49.486+0000] {processor.py:161} INFO - Started process (PID=452) to work on /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:22:49.487+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/predictive_pipeline_dag.py for tasks to queue
+[2025-11-20T22:22:49.489+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:22:49.489+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:22:51.197+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/_tracking_service/utils.py:140 FutureWarning: Filesystem tracking backend (e.g., './mlruns') is deprecated. Please switch to a database backend (e.g., 'sqlite:///mlflow.db'). For feedback, see: https://github.com/mlflow/mlflow/issues/18534
+[2025-11-20T22:22:51.959+0000] {processor.py:840} INFO - DAG(s) 'predictive_pipeline_xgb' retrieved from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:22:51.985+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:22:51.983+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-11-20T22:22:52.007+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:22:52.007+0000] {dag.py:3954} INFO - Setting next_dagrun for predictive_pipeline_xgb to 2025-11-23 00:00:00+00:00, run_after=2025-11-30 00:00:00+00:00
+[2025-11-20T22:22:52.060+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/predictive_pipeline_dag.py took 2.580 seconds
+[2025-11-20T22:23:22.149+0000] {processor.py:161} INFO - Started process (PID=462) to work on /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:23:22.151+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/predictive_pipeline_dag.py for tasks to queue
+[2025-11-20T22:23:22.152+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:23:22.152+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:23:24.091+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/_tracking_service/utils.py:140 FutureWarning: Filesystem tracking backend (e.g., './mlruns') is deprecated. Please switch to a database backend (e.g., 'sqlite:///mlflow.db'). For feedback, see: https://github.com/mlflow/mlflow/issues/18534
+[2025-11-20T22:23:24.890+0000] {processor.py:840} INFO - DAG(s) 'predictive_pipeline_xgb' retrieved from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:23:24.922+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:23:24.921+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-11-20T22:23:24.945+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:23:24.945+0000] {dag.py:3954} INFO - Setting next_dagrun for predictive_pipeline_xgb to 2025-11-23 00:00:00+00:00, run_after=2025-11-30 00:00:00+00:00
+[2025-11-20T22:23:24.995+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/predictive_pipeline_dag.py took 2.852 seconds
+[2025-11-20T22:23:55.095+0000] {processor.py:161} INFO - Started process (PID=472) to work on /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:23:55.096+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/predictive_pipeline_dag.py for tasks to queue
+[2025-11-20T22:23:55.098+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:23:55.098+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:23:56.819+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/_tracking_service/utils.py:140 FutureWarning: Filesystem tracking backend (e.g., './mlruns') is deprecated. Please switch to a database backend (e.g., 'sqlite:///mlflow.db'). For feedback, see: https://github.com/mlflow/mlflow/issues/18534
+[2025-11-20T22:23:57.601+0000] {processor.py:840} INFO - DAG(s) 'predictive_pipeline_xgb' retrieved from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:23:57.629+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:23:57.628+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-11-20T22:23:57.652+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:23:57.652+0000] {dag.py:3954} INFO - Setting next_dagrun for predictive_pipeline_xgb to 2025-11-23 00:00:00+00:00, run_after=2025-11-30 00:00:00+00:00
+[2025-11-20T22:23:57.705+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/predictive_pipeline_dag.py took 2.616 seconds
+[2025-11-20T22:24:28.138+0000] {processor.py:161} INFO - Started process (PID=482) to work on /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:24:28.139+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/predictive_pipeline_dag.py for tasks to queue
+[2025-11-20T22:24:28.141+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:24:28.140+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:24:29.835+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/mlflow/tracking/_tracking_service/utils.py:140 FutureWarning: Filesystem tracking backend (e.g., './mlruns') is deprecated. Please switch to a database backend (e.g., 'sqlite:///mlflow.db'). For feedback, see: https://github.com/mlflow/mlflow/issues/18534
+[2025-11-20T22:24:30.458+0000] {processor.py:840} INFO - DAG(s) 'predictive_pipeline_xgb' retrieved from /opt/airflow/dags/predictive_pipeline_dag.py
+[2025-11-20T22:24:30.580+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:24:30.580+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-11-20T22:24:30.603+0000] {logging_mixin.py:188} INFO - [2025-11-20T22:24:30.603+0000] {dag.py:3954} INFO - Setting next_dagrun for predictive_pipeline_xgb to 2025-11-23 00:00:00+00:00, run_after=2025-11-30 00:00:00+00:00
+[2025-11-20T22:24:30.657+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/predictive_pipeline_dag.py took 2.526 seconds
