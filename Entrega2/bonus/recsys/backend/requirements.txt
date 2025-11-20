@@ -1,8 +1,5 @@
 fastapi==0.115.0
-uvicorn[standard]==0.30.6
-<<<<<<< HEAD
+uvicorn[standard]==0.32.0
 pydantic==2.9.2
-=======
->>>>>>> ef13916040562e15918fd194ff3221eedc59ca1b
-pandas==2.2.2
-pyarrow==16.1.0
+pandas==2.2.3
+pyarrow==17.0.0
