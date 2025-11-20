@@ -15,7 +15,6 @@ WELCOME_MESSAGE = """
 - ¿Cuántos clientes únicos hay en el dataset?
 - ¿Cuántas transacciones ha realizado el cliente 12345?
 - ¿Cuántos productos únicos se encuentran en los datos?
-- ¿Cuál es el total de ventas?
 - ¿Cuántas predicciones hay?
 
 ---
@@ -111,7 +110,6 @@ def get_customer_stats(customer_id):
 
 def list_available_customers(limit):
     """Lista los customer IDs disponibles."""
-    # CAMBIO AQUÍ: /customers en lugar de /customers-list
     data, err = _safe_request("GET", f"{BACKEND_URL}/customers?limit={int(limit)}")
     
     if err:
@@ -165,12 +163,11 @@ with gr.Blocks(title="SodAI LLM Chatbot") as demo:
                 submit_btn = gr.Button("📤 Enviar", variant="primary")
                 clear_btn = gr.Button("🗑️ Limpiar Chat")
             
-            # Ejemplos de preguntas
+            # Ejemplos de preguntas (sin preguntas de ventas)
             gr.Examples(
                 examples=[
                     ["¿Cuántos clientes únicos hay en el dataset?"],
                     ["¿Cuántos productos únicos se encuentran en los datos?"],
-                    ["¿Cuál es el total de ventas?"],
                     ["¿Cuántas predicciones hay?"],
                     ["¿Cuántas transacciones ha realizado el cliente 100001?"],
                 ],
