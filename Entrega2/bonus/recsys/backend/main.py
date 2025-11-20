@@ -10,9 +10,10 @@ APP_NAME = "SodAI RecSys Backend"
 DESCRIPTION = "Sistema de recomendación que genera 5 productos sugeridos para cualquier cliente"
 
 # Estos valores los sobreescribes en docker-compose:
-# PREDICTIONS_DIR=/mnt/preds, PRODUCTS_DIR=/mnt/products
+# PREDICTIONS_DIR=/mnt/preds, PRODUCTS_DIR=/mnt/products, TRANSACTIONS_DIR=/mnt/transactions
 PREDICTIONS_DIR = os.getenv("PREDICTIONS_DIR", "/opt/airflow/data/predictions")
 PRODUCTS_DIR = os.getenv("PRODUCTS_DIR", "/opt/airflow/data/products")
+TRANSACTIONS_DIR = os.getenv("TRANSACTIONS_DIR", "/opt/airflow/data/transactions")
 
 app = FastAPI(title=APP_NAME, description=DESCRIPTION, version="1.0.0")
 
@@ -92,6 +93,50 @@ def _load_product_catalog() -> pd.DataFrame:
     return pd.DataFrame(columns=["product_id", "product_name", "category"])
 
 
+def _get_latest_transactions_path() -> str:
+    """Obtiene el archivo de transacciones más reciente."""
+    os.makedirs(TRANSACTIONS_DIR, exist_ok=True)
+    files = sorted(
+        glob.glob(os.path.join(TRANSACTIONS_DIR, "*.parquet")),
+        key=os.path.getmtime,
+        reverse=True,
+    )
+    if not files:
+        return None
+    return files[0]
+
+
+def _read_latest_transactions() -> tuple[pd.DataFrame, str]:
+    """
+    Lee el archivo de transacciones más reciente.
+    Las columnas esperadas son:
+    - customer_id (int32)
+    - product_id (int32)
+    - order_id (int32)
+    - purchase_date (datetime64[ns])
+    - items (float32)
+    """
+    path = _get_latest_transactions_path()
+    if not path:
+        return None, None
+    
+    df = pd.read_parquet(path)
+    
+    # Asegurar tipos de datos correctos
+    if "customer_id" in df.columns:
+        df["customer_id"] = df["customer_id"].astype(str)
+    if "product_id" in df.columns:
+        df["product_id"] = df["product_id"].astype(str)
+    if "order_id" in df.columns:
+        df["order_id"] = df["order_id"].astype(str)
+    if "purchase_date" in df.columns:
+        df["purchase_date"] = pd.to_datetime(df["purchase_date"])
+    if "items" in df.columns:
+        df["items"] = df["items"].astype(float)
+    
+    return df, path
+
+
 @app.get("/health")
 def health():
     """Health check del servicio."""
@@ -99,6 +144,7 @@ def health():
         "status": "ok",
         "service": APP_NAME,
         "predictions_dir": PREDICTIONS_DIR,
+        "transactions_dir": TRANSACTIONS_DIR,
     }
 
 
@@ -221,7 +267,22 @@ def get_statistics():
     unique_customers = df["customer_id"].nunique() if "customer_id" in df.columns else 0
     unique_products = df["product_id"].nunique() if "product_id" in df.columns else 0
 
-    transactions_stats = None  # Si luego tienes otro dataset de transacciones, lo calculas aquí
+    # Leer estadísticas de transacciones
+    transactions_stats = None
+    try:
+        trans_df, trans_path = _read_latest_transactions()
+        if trans_df is not None and not trans_df.empty:
+            transactions_stats = {
+                "total": len(trans_df),
+                "unique_customers": trans_df["customer_id"].nunique() if "customer_id" in trans_df.columns else 0,
+                "unique_products": trans_df["product_id"].nunique() if "product_id" in trans_df.columns else 0,
+                "unique_orders": trans_df["order_id"].nunique() if "order_id" in trans_df.columns else 0,
+                "total_items": float(trans_df["items"].sum()) if "items" in trans_df.columns else 0,
+                "latest_file": os.path.basename(trans_path) if trans_path else None,
+            }
+    except Exception as e:
+        # Si hay error leyendo transacciones, no fallar todo el endpoint
+        transactions_stats = {"error": str(e)}
 
     return {
         "predictions": {
@@ -229,6 +290,5 @@ def get_statistics():
             "unique_customers": unique_customers,
             "unique_products": unique_products,
         },
-        "transactions": transactions_stats,
         "latest_file": os.path.basename(path),
     }

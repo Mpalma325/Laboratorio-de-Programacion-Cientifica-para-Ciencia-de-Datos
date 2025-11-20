@@ -40,6 +40,44 @@ services:
     networks:
       - bonus-network
 
+
+  # ========================================
+  # Chatbot Conversacional (LLM)
+  # ========================================
+  llm-backend:
+    build: ./llm/backend
+    container_name: llm-backend
+    environment:
+      - DATA_DIR=/mnt/data
+    volumes:
+      - ../airflow/data:/mnt/data:ro
+    ports:
+      - "8002:8002"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8002/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - bonus-network
+
+  llm-frontend:
+    build: ./llm/frontend
+    container_name: llm-frontend
+    environment:
+      - BACKEND_URL=http://llm-backend:8002
+      - PORT=7862
+    ports:
+      - "7862:7862"
+    depends_on:
+      llm-backend:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - bonus-network
+
 networks:
   bonus-network:
     driver: bridge

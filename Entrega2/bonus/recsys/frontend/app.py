@@ -20,13 +20,11 @@ Este sistema genera **5 recomendaciones personalizadas** de productos para cualq
    - Score de cada producto (0-1)
    - Ranking de recomendaciones
 
-### 💡 Consejos:
+### 💡 Otros:
 - Puedes explorar diferentes clientes usando la pestaña "Explorar Clientes"
 - Revisa las estadísticas del sistema en "Estadísticas"
-- Los productos se ordenan por score descendente (mayor probabilidad primero)
-
+- Los productos se ordenan por score descendente.
 ---
-**Nota:** Las recomendaciones se basan en las predicciones generadas por el pipeline de Airflow.
 """
 
 def _safe_get_json(url):
@@ -40,7 +38,6 @@ def _safe_get_json(url):
 
 def get_recommendations(customer_id, top_n=5):
     """Obtiene recomendaciones para un cliente"""
-    # 🔧 Sanear el ID (quita espacios y saltos de línea)
     if customer_id is None:
         customer_id = ""
     customer_id = str(customer_id).strip()
