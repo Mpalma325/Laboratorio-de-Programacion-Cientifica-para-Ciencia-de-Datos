@@ -27,8 +27,4 @@ services:
     depends_on:
       backend:
         condition: service_healthy
-<<<<<<< HEAD
     restart: unless-stopped
-=======
-    restart: unless-stopped
->>>>>>> ef13916040562e15918fd194ff3221eedc59ca1b
