@@ -1,0 +1,71 @@
+[2025-11-17T21:16:13.206+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-11-17T21:16:13.238+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: predictive_pipeline_xgb.prepare_data manual__2025-11-17T21:16:03.037544+00:00 [queued]>
+[2025-11-17T21:16:13.251+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: predictive_pipeline_xgb.prepare_data manual__2025-11-17T21:16:03.037544+00:00 [queued]>
+[2025-11-17T21:16:13.252+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 3
+[2025-11-17T21:16:13.280+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): prepare_data> on 2025-11-17 21:16:03.037544+00:00
+[2025-11-17T21:16:13.294+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=133) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-11-17T21:16:13.292+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'predictive_pipeline_xgb', 'prepare_data', 'manual__2025-11-17T21:16:03.037544+00:00', '--job-id', '7', '--raw', '--subdir', 'DAGS_FOLDER/predictive_pipeline_dag.py', '--cfg-path', '/tmp/tmprik7z5de']
+[2025-11-17T21:16:13.296+0000] {standard_task_runner.py:63} INFO - Started process 150 to run task
+[2025-11-17T21:16:13.296+0000] {standard_task_runner.py:91} INFO - Job 7: Subtask prepare_data
+[2025-11-17T21:16:13.392+0000] {task_command.py:426} INFO - Running <TaskInstance: predictive_pipeline_xgb.prepare_data manual__2025-11-17T21:16:03.037544+00:00 [running]> on host 902cc6608d8f
+[2025-11-17T21:16:13.519+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='ml_team' AIRFLOW_CTX_DAG_ID='predictive_pipeline_xgb' AIRFLOW_CTX_TASK_ID='prepare_data' AIRFLOW_CTX_EXECUTION_DATE='2025-11-17T21:16:03.037544+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-11-17T21:16:03.037544+00:00'
+[2025-11-17T21:16:13.520+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-11-17T21:16:14.078+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-11-17T21:16:14.081+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 400, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/scripts/data_preparation.py", line 52, in prepare_data
+    df_feat = feat_pipe.fit_transform(df_tx)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sklearn/pipeline.py", line 719, in fit_transform
+    Xt = self._fit(X, y, routed_params)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sklearn/pipeline.py", line 589, in _fit
+    X, fitted_transformer = fit_transform_one_cached(
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/joblib/memory.py", line 326, in __call__
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sklearn/pipeline.py", line 1540, in _fit_transform_one
+    res = transformer.fit_transform(X, y, **params.get("fit_transform", {}))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sklearn/utils/_set_output.py", line 316, in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sklearn/base.py", line 894, in fit_transform
+    return self.fit(X, **fit_params).transform(X)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sklearn/utils/_set_output.py", line 316, in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/scripts/transformers.py", line 24, in transform
+    df = X.copy().sort_values([self.c, self.p, self.week_col]).reset_index(drop=True)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/core/frame.py", line 6927, in sort_values
+    keys = [self._get_label_or_level_values(x, axis=axis) for x in by]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/core/generic.py", line 1844, in _get_label_or_level_values
+    raise KeyError(key)
+KeyError: 'week'
+[2025-11-17T21:16:14.118+0000] {taskinstance.py:1206} INFO - Marking task as UP_FOR_RETRY. dag_id=predictive_pipeline_xgb, task_id=prepare_data, run_id=manual__2025-11-17T21:16:03.037544+00:00, execution_date=20251117T211603, start_date=20251117T211613, end_date=20251117T211614
+[2025-11-17T21:16:14.153+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 7 for task prepare_data ('week'; 150)
+[2025-11-17T21:16:14.190+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2025-11-17T21:16:14.246+0000] {taskinstance.py:3498} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-11-17T21:16:14.248+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

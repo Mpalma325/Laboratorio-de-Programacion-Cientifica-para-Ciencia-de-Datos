@@ -1,0 +1,78 @@
+version: "3.9"
+
+services:
+  # ========================================
+  # Sistema de Recomendación (RecSys)
+  # ========================================
+  recsys-backend:
+    build: ./recsys/backend
+    container_name: recsys-backend
+    environment:
+      - PREDICTIONS_DIR=/mnt/preds
+      - PRODUCTS_DIR=/mnt/products
+    volumes:
+      - ../airflow/data/predictions:/mnt/preds:ro
+      - ../airflow/data/products:/mnt/products:ro
+    ports:
+      - "8001:8001"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8001/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - bonus-network
+
+  recsys-frontend:
+    build: ./recsys/frontend
+    container_name: recsys-frontend
+    environment:
+      - BACKEND_URL=http://recsys-backend:8001
+    ports:
+      - "7861:7861"
+    depends_on:
+      recsys-backend:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - bonus-network
+
+  # ========================================
+  # Chatbot Conversacional (LLM)
+  # ========================================
+  llm-backend:
+    build: ./llm/backend
+    container_name: llm-backend
+    environment:
+      - DATA_DIR=/mnt/data
+    volumes:
+      - ../airflow/data:/mnt/data:ro
+    ports:
+      - "8002:8002"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8002/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - bonus-network
+
+  llm-frontend:
+    build: ./llm/frontend
+    container_name: llm-frontend
+    environment:
+      - BACKEND_URL=http://llm-backend:8002
+    ports:
+      - "7862:7862"
+    depends_on:
+      llm-backend:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - bonus-network
+
+networks:
+  bonus-network:
+    driver: bridge

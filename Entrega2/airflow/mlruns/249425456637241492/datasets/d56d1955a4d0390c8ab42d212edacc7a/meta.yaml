@@ -1,0 +1,9 @@
+digest: 9793f3aa
+name: dataset
+profile: '{"features_shape": [3000860, 45], "features_size": 135038700, "features_nbytes":
+  1080309600}'
+schema: '{"mlflow_tensorspec": {"features": "[{\"type\": \"tensor\", \"tensor-spec\":
+  {\"dtype\": \"float64\", \"shape\": [-1, 45]}}]", "targets": null}}'
+source: '{"tags": {"mlflow.user": "airflow", "mlflow.source.name": "/home/airflow/.local/bin/airflow",
+  "mlflow.source.type": "LOCAL"}}'
+source_type: code

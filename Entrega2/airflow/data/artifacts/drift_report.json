@@ -1,0 +1,18 @@
+{
+  "ks_pvalues": {
+    "num_deliver_per_week": 1.0,
+    "items_prev": 1.0,
+    "recencia_producto": 1.0,
+    "popularity_prev": 1.0,
+    "frec_producto": 1.0,
+    "size": 1.0,
+    "X": 1.0,
+    "Y": 1.0,
+    "customer_type": 1.0,
+    "brand": 1.0,
+    "sub_category": 1.0,
+    "segment": 1.0,
+    "package": 1.0
+  },
+  "drift_detected": false
+}

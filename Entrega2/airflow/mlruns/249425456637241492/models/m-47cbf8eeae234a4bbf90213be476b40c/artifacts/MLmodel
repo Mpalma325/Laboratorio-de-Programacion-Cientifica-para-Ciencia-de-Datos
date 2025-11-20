@@ -1,0 +1,28 @@
+artifact_path: file:///opt/airflow/mlruns/249425456637241492/models/m-47cbf8eeae234a4bbf90213be476b40c/artifacts
+flavors:
+  python_function:
+    data: model.ubj
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.xgboost
+    python_version: 3.12.3
+  xgboost:
+    code: null
+    data: model.ubj
+    model_class: xgboost.sklearn.XGBClassifier
+    model_format: ubj
+    xgb_version: 3.1.1
+is_signature_from_type_hint: false
+mlflow_version: 3.6.0
+model_id: m-47cbf8eeae234a4bbf90213be476b40c
+model_size_bytes: 1323190
+model_uuid: m-47cbf8eeae234a4bbf90213be476b40c
+prompts: null
+run_id: d4706d3b88d14a96a26c7fe7432e6703
+signature:
+  inputs: '[{"type": "tensor", "tensor-spec": {"dtype": "float64", "shape": [-1, 45]}}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "int64", "shape": [-1]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2025-11-19 20:51:57.715529'

@@ -1,0 +1,14 @@
+artifact_uri: file:///opt/airflow/mlruns/249425456637241492/4a399fd131df43289ee299b01029ad39/artifacts
+end_time: 1763584663801
+entry_point_name: ''
+experiment_id: '249425456637241492'
+lifecycle_stage: active
+run_id: 4a399fd131df43289ee299b01029ad39
+run_name: dapper-shrimp-301
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1763584324537
+status: 3
+tags: []
+user_id: airflow

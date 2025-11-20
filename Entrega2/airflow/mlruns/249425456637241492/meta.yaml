@@ -1,0 +1,6 @@
+artifact_location: file:///opt/airflow/mlruns/249425456637241492
+creation_time: 1763414026421
+experiment_id: '249425456637241492'
+last_update_time: 1763414026421
+lifecycle_stage: active
+name: predictive_pipeline_xgb

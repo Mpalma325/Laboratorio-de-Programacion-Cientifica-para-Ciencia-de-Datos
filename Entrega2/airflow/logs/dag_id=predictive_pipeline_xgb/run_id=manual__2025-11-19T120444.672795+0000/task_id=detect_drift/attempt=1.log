@@ -1,0 +1,22 @@
+[2025-11-19T12:06:48.792+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-11-19T12:06:48.840+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: predictive_pipeline_xgb.detect_drift manual__2025-11-19T12:04:44.672795+00:00 [queued]>
+[2025-11-19T12:06:48.863+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: predictive_pipeline_xgb.detect_drift manual__2025-11-19T12:04:44.672795+00:00 [queued]>
+[2025-11-19T12:06:48.865+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 3
+[2025-11-19T12:06:48.951+0000] {taskinstance.py:2330} INFO - Executing <Task(BranchPythonOperator): detect_drift> on 2025-11-19 12:04:44.672795+00:00
+[2025-11-19T12:06:48.966+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=138) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-11-19T12:06:48.968+0000] {standard_task_runner.py:63} INFO - Started process 155 to run task
+[2025-11-19T12:06:48.965+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'predictive_pipeline_xgb', 'detect_drift', 'manual__2025-11-19T12:04:44.672795+00:00', '--job-id', '20', '--raw', '--subdir', 'DAGS_FOLDER/predictive_pipeline_dag.py', '--cfg-path', '/tmp/tmp5oe3rfux']
+[2025-11-19T12:06:48.969+0000] {standard_task_runner.py:91} INFO - Job 20: Subtask detect_drift
+[2025-11-19T12:06:49.176+0000] {task_command.py:426} INFO - Running <TaskInstance: predictive_pipeline_xgb.detect_drift manual__2025-11-19T12:04:44.672795+00:00 [running]> on host ccd6ea7157c0
+[2025-11-19T12:06:49.442+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='ml_team' AIRFLOW_CTX_DAG_ID='predictive_pipeline_xgb' AIRFLOW_CTX_TASK_ID='detect_drift' AIRFLOW_CTX_EXECUTION_DATE='2025-11-19T12:04:44.672795+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-11-19T12:04:44.672795+00:00'
+[2025-11-19T12:06:49.443+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-11-19T12:06:49.463+0000] {baseoperator.py:399} WARNING - BranchPythonOperator.execute cannot be called outside TaskInstance!
+[2025-11-19T12:06:49.475+0000] {python.py:237} INFO - Done. Returned value was: skip_retrain
+[2025-11-19T12:06:49.476+0000] {branch.py:36} INFO - Branch into skip_retrain
+[2025-11-19T12:06:49.477+0000] {skipmixin.py:178} INFO - Following branch skip_retrain
+[2025-11-19T12:06:49.528+0000] {skipmixin.py:246} INFO - Skipping tasks [('retrain_xgb', -1)]
+[2025-11-19T12:06:49.645+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-11-19T12:06:49.711+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=predictive_pipeline_xgb, task_id=detect_drift, run_id=manual__2025-11-19T12:04:44.672795+00:00, execution_date=20251119T120444, start_date=20251119T120648, end_date=20251119T120649
+[2025-11-19T12:06:49.785+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-11-19T12:06:49.856+0000] {taskinstance.py:3498} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-11-19T12:06:49.883+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

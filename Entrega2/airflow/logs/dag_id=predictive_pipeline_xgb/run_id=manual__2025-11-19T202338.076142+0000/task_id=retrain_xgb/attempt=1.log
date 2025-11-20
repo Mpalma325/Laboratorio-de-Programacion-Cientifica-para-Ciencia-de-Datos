@@ -1,0 +1,43 @@
+[2025-11-19T20:26:14.750+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-11-19T20:26:14.829+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: predictive_pipeline_xgb.retrain_xgb manual__2025-11-19T20:23:38.076142+00:00 [queued]>
+[2025-11-19T20:26:14.853+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: predictive_pipeline_xgb.retrain_xgb manual__2025-11-19T20:23:38.076142+00:00 [queued]>
+[2025-11-19T20:26:14.856+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 3
+[2025-11-19T20:26:14.915+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): retrain_xgb> on 2025-11-19 20:23:38.076142+00:00
+[2025-11-19T20:26:14.936+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=174) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-11-19T20:26:14.938+0000] {standard_task_runner.py:63} INFO - Started process 191 to run task
+[2025-11-19T20:26:14.935+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'predictive_pipeline_xgb', 'retrain_xgb', 'manual__2025-11-19T20:23:38.076142+00:00', '--job-id', '25', '--raw', '--subdir', 'DAGS_FOLDER/predictive_pipeline_dag.py', '--cfg-path', '/tmp/tmpj4tjg40o']
+[2025-11-19T20:26:14.940+0000] {standard_task_runner.py:91} INFO - Job 25: Subtask retrain_xgb
+[2025-11-19T20:26:15.097+0000] {task_command.py:426} INFO - Running <TaskInstance: predictive_pipeline_xgb.retrain_xgb manual__2025-11-19T20:23:38.076142+00:00 [running]> on host 5142ff2df330
+[2025-11-19T20:26:15.417+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='ml_team' AIRFLOW_CTX_DAG_ID='predictive_pipeline_xgb' AIRFLOW_CTX_TASK_ID='retrain_xgb' AIRFLOW_CTX_EXECUTION_DATE='2025-11-19T20:23:38.076142+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-11-19T20:23:38.076142+00:00'
+[2025-11-19T20:26:15.420+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-11-19T20:26:25.607+0000] {logging_mixin.py:188} WARNING - 2025/11/19 20:26:25 WARNING mlflow.utils.git_utils: Failed to import Git (the Git executable is probably not on your PATH), so Git SHA is not available. Error: Failed to initialize: Bad git executable.
+The git executable must be specified in one of the following ways:
+    - be included in your $PATH
+    - be set via $GIT_PYTHON_GIT_EXECUTABLE
+    - explicitly set via git.refresh(<full-path-to-git-executable>)
+
+All git commands will error until this is rectified.
+
+This initial message can be silenced or aggravated in the future by setting the
+$GIT_PYTHON_REFRESH environment variable. Use one of the following values:
+    - quiet|q|silence|s|silent|none|n|0: for no message or exception
+    - warn|w|warning|log|l|1: for a warning message (logging level CRITICAL, displayed by default)
+    - error|e|exception|raise|r|2: for a raised exception
+
+Example:
+    export GIT_PYTHON_REFRESH=quiet
+[2025-11-19T20:26:26.315+0000] {logging_mixin.py:188} WARNING - 2025/11/19 20:26:26 INFO mlflow.utils.autologging_utils: Created MLflow autologging run with ID '06a10d9673ec406c8f9a99655bd0d46d', which will track hyperparameters, performance metrics, model artifacts, and lineage information for the current xgboost workflow
+[2025-11-19T20:31:39.230+0000] {logging_mixin.py:188} WARNING - 2025/11/19 20:31:39 WARNING mlflow.models.model: `artifact_path` is deprecated. Please use `name` instead.
+[2025-11-19T20:32:05.346+0000] {logging_mixin.py:188} WARNING - 2025/11/19 20:32:05 INFO mlflow.utils.autologging_utils: Created MLflow autologging run with ID '4a399fd131df43289ee299b01029ad39', which will track hyperparameters, performance metrics, model artifacts, and lineage information for the current xgboost workflow
+[2025-11-19T20:37:30.184+0000] {logging_mixin.py:188} WARNING - 2025/11/19 20:37:30 WARNING mlflow.models.model: `artifact_path` is deprecated. Please use `name` instead.
+[2025-11-19T20:37:58.423+0000] {logging_mixin.py:188} WARNING - 2025/11/19 20:37:58 INFO mlflow.utils.autologging_utils: Created MLflow autologging run with ID 'f1d08ee9afee4d7ea8870840bedfa6a0', which will track hyperparameters, performance metrics, model artifacts, and lineage information for the current xgboost workflow
+[2025-11-19T20:50:01.068+0000] {logging_mixin.py:188} WARNING - 2025/11/19 20:50:01 WARNING mlflow.models.model: `artifact_path` is deprecated. Please use `name` instead.
+[2025-11-19T20:51:56.143+0000] {logging_mixin.py:188} WARNING - 2025/11/19 20:51:56 WARNING mlflow.models.model: `artifact_path` is deprecated. Please use `name` instead.
+[2025-11-19T20:52:33.127+0000] {logging_mixin.py:188} WARNING - 2025/11/19 20:52:33 WARNING mlflow.models.model: `artifact_path` is deprecated. Please use `name` instead.
+[2025-11-19T20:52:39.348+0000] {logging_mixin.py:188} WARNING - 2025/11/19 20:52:39 WARNING mlflow.models.model: Model logged without a signature and input example. Please set `input_example` parameter when logging the model to auto infer the model signature.
+[2025-11-19T20:52:42.614+0000] {python.py:237} INFO - Done. Returned value was: None
+[2025-11-19T20:52:42.615+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-11-19T20:52:42.629+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=predictive_pipeline_xgb, task_id=retrain_xgb, run_id=manual__2025-11-19T20:23:38.076142+00:00, execution_date=20251119T202338, start_date=20251119T202614, end_date=20251119T205242
+[2025-11-19T20:52:42.739+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-11-19T20:52:42.777+0000] {taskinstance.py:3498} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-11-19T20:52:42.791+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

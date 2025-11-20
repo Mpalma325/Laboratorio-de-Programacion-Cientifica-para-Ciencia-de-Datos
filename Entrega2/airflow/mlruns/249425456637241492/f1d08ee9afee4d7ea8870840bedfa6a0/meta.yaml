@@ -1,0 +1,14 @@
+artifact_uri: file:///opt/airflow/mlruns/249425456637241492/f1d08ee9afee4d7ea8870840bedfa6a0/artifacts
+end_time: 1763585407092
+entry_point_name: ''
+experiment_id: '249425456637241492'
+lifecycle_stage: active
+run_id: f1d08ee9afee4d7ea8870840bedfa6a0
+run_name: debonair-bee-189
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1763584677321
+status: 3
+tags: []
+user_id: airflow

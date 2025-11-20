@@ -1,0 +1,9 @@
+digest: fdda634c
+name: dataset
+profile: '{"features_shape": [6001720, 45], "features_size": 270077400, "features_nbytes":
+  1080309600}'
+schema: '{"mlflow_tensorspec": {"features": "[{\"type\": \"tensor\", \"tensor-spec\":
+  {\"dtype\": \"float32\", \"shape\": [-1, 45]}}]", "targets": null}}'
+source: '{"tags": {"mlflow.user": "airflow", "mlflow.source.name": "/home/airflow/.local/bin/airflow",
+  "mlflow.source.type": "LOCAL"}}'
+source_type: code
