@@ -101,8 +101,12 @@ def train_model(**kwargs):
         ref_dir.mkdir(parents=True, exist_ok=True)
         
         proc_features = "/opt/airflow/data/processed/features.parquet"
-        ref_features = "/opt/airflow/data/reference/features.parquet"
         
         if os.path.exists(proc_features):
-            shutil.copy(proc_features, ref_features)
-            ml.log_artifact(ref_features)
+            # Guardar con timestamp para no sobrescribir
+            from datetime import datetime
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            ref_features_new = f"/opt/airflow/data/reference/features_{timestamp}.parquet"
+            
+            shutil.copyfile(proc_features, ref_features_new)
+            ml.log_artifact(ref_features_new)
