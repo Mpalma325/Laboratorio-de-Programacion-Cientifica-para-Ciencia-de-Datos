@@ -31,12 +31,24 @@ def _load_config():
 
 def prepare_data(**kwargs):
     raw_dir = "/opt/airflow/data/raw"
+    new_data_dir = "/opt/airflow/data/new_data"
     proc_dir = "/opt/airflow/data/processed"
     model_dir = "/opt/airflow/data/models"
     Path(proc_dir).mkdir(parents=True, exist_ok=True)
     Path(model_dir).mkdir(parents=True, exist_ok=True)
 
+
     transacciones = pd.read_parquet(f"{raw_dir}/transacciones.parquet")
+    
+
+    new_data_path = Path(new_data_dir)
+    if new_data_path.exists():
+        new_files = list(new_data_path.glob("*.parquet"))
+        if new_files:
+            nuevas_transacciones = [pd.read_parquet(f) for f in new_files]
+            transacciones = pd.concat([transacciones] + nuevas_transacciones, ignore_index=True)
+    
+
     path_cli = f"{raw_dir}/clientes.parquet"
     path_prod = f"{raw_dir}/productos.parquet"
     clientes = pd.read_parquet(path_cli) if os.path.exists(path_cli) else pd.DataFrame()
@@ -61,9 +73,15 @@ def prepare_data(**kwargs):
     weeks_total = weekly["week"].unique()
     customers_total = weekly["customer_id"].unique()
     products_total = weekly["product_id"].unique()
+    
 
+    max_week = weeks_total.max()
+    next_week = max_week + 1
+    weeks_with_future = np.append(weeks_total, next_week)
+
+    # Crear índice completo incluyendo semana futura
     idx = pd.MultiIndex.from_product(
-        [customers_total, products_total, weeks_total],
+        [customers_total, products_total, weeks_with_future],
         names=["customer_id", "product_id", "week"]
     )
     full = pd.DataFrame(index=idx).reset_index()
@@ -73,6 +91,7 @@ def prepare_data(**kwargs):
         how="left"
     )
 
+
     if not clientes.empty:
         weekly_full = weekly_full.merge(clientes, on="customer_id", how="left")
     if not productos.empty:
@@ -81,6 +100,7 @@ def prepare_data(**kwargs):
     weekly_full["items"] = weekly_full["items"].fillna(0).astype("int32")
     weekly_full["n_orders"] = weekly_full["n_orders"].fillna(0).astype("int32")
     weekly_full["compra"] = (weekly_full["items"] > 0).astype("int8")
+
 
     feat_pipe = Pipeline([
         ("hist", DatosHistoricos()),
@@ -92,6 +112,7 @@ def prepare_data(**kwargs):
     
     df_feat = feat_pipe.fit_transform(weekly_full)
 
+    # Definir columnas
     numeric_columns = [
         "num_deliver_per_week", "items_prev", "recencia_producto",
         "popularity_prev", "frec_producto", "size", "X", "Y"
@@ -131,8 +152,13 @@ def prepare_data(**kwargs):
         ("drop", "drop", drop_cols),
     ], remainder="drop", verbose_feature_names_out=False)
 
-    X = preprocessor.fit_transform(df_feat)
-    y = df_feat["compra"].astype(int).to_numpy()
+
+    df_historic = df_feat[df_feat["week"] != next_week].copy()
+    df_future = df_feat[df_feat["week"] == next_week].copy()
+    
+
+    X = preprocessor.fit_transform(df_historic)
+    y = df_historic["compra"].astype(int).to_numpy()
 
     joblib.dump(preprocessor, f"{model_dir}/preprocessor.pkl")
     joblib.dump(feat_pipe, f"{model_dir}/feature_pipeline.pkl")
@@ -141,6 +167,10 @@ def prepare_data(**kwargs):
     np.save(f"{proc_dir}/y_trainval.npy", y)
 
     keep_cols = numeric_columns + categorical_columns + ["customer_id", "product_id", "week"]
-    df_feat_clean = df_feat[keep_cols].copy()
-    df_feat_clean['y'] = y
-    df_feat_clean.to_parquet(f"{proc_dir}/features.parquet")
+    df_historic_clean = df_historic[keep_cols].copy()
+    df_historic_clean['y'] = y
+    df_historic_clean.to_parquet(f"{proc_dir}/features.parquet")
+    
+
+    df_future_clean = df_future[keep_cols].copy()
+    df_future_clean.to_parquet(f"{proc_dir}/features_future.parquet")
