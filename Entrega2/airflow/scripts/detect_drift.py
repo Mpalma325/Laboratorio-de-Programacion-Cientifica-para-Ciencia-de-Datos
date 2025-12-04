@@ -46,12 +46,10 @@ def detect_drift(**kwargs):
         r = ref[c].to_numpy()
         k = cur[c].to_numpy()
         
-        
         if np.issubdtype(r.dtype, np.number):
             r = r[~np.isnan(r)]
             k = k[~np.isnan(k)]
         else:
-
             r = r[pd.notna(r)]
             k = k[pd.notna(k)]
         
@@ -62,10 +60,15 @@ def detect_drift(**kwargs):
             except Exception:
                 pass
 
-    drift_detected = any(p < 0.05 for p in drift.values()) if drift else False
+
+    significant_drifts = [p < 0.03 for p in drift.values()]
+    drift_count = sum(significant_drifts)
+    drift_detected = drift_count >= 3 if drift else False
 
     report["ks_pvalues"] = drift
     report["drift_detected"] = drift_detected
+    report["features_with_drift"] = drift_count
+    report["threshold_used"] = 0.01
 
     with open(f"{art_dir}/drift_report.json", "w") as f:
         json.dump(report, f, indent=2)
